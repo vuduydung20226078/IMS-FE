@@ -67,7 +67,7 @@ closeIcon.addEventListener("click", () => {
 
 // show products
 function showListProducts() {
-    fetch(`http://localhost:3000/products`)
+    fetch(`https://backend-ims-zuqh.onrender.com/api/products/get-all`)
         .then(response => response.json())
         .then(data => {
             let tableBody = document.getElementById('product-table-body');
