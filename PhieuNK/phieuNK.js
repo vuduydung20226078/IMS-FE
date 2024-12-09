@@ -152,6 +152,7 @@ closeSupplierIcon.addEventListener("click", () => {
 async function fetchNameSupplier() {
     try {
         const response = await fetch("http://localhost:3000/suppliers");
+        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/suppliers");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -187,6 +188,7 @@ showListNameSupplier();
 async function fetchNameProduct() {
     try {
         const response = await fetch("http://localhost:3000/products");
+        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/products");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -218,6 +220,7 @@ showListNameProduct();
 async function fetchProductsBySupplierName(supplierName) {
     try {
         const response = await fetch(`http://localhost:3000/supplierProduct/search?name=${supplierName}`);
+        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/supplier/${supplierName}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -262,9 +265,11 @@ supplierInput.addEventListener("input", showProductsBySupplier);
 async function genInfoToForm() {
     const supplierName = document.getElementById("supplier-name-input").value;
     const dataS = await fetch(`http://localhost:3000/suppliers/search?name=${supplierName}`);
+    const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
     const suppliers = await dataS.json();
     const productName = document.getElementById("product-name-input").value;
     const dataP = await fetch(`http://localhost:3000/products/search?name=${productName}`);
+    const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/${productName}`);
     const products = await dataP.json();
     const formPhieuNK = document.getElementById("inforSupplierProduct");
     const productDiv = document.createElement("div");
@@ -376,6 +381,7 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         address: document.getElementById("address").value
     };
     fetch('http://localhost:3000/suppliers', {
+    fetch('https://backend-ims-zuqh.onrender.com/api/suppliers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSupplier)
@@ -411,6 +417,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
     };
     console.log("Sending data:", JSON.stringify(newProduct));
     fetch(`http://localhost:3000/products`, {
+    fetch(`https://backend-ims-zuqh.onrender.com/api/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -457,6 +464,8 @@ async function linkProductToSupplier(productName, supplierName){
         const [resS, resP] = await Promise.all([
             fetch(`http://localhost:3000/products/search?name=${productName}`),
             fetch(`http://localhost:3000/suppliers/search?name=${supplierName}`)
+            fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${productName}`),
+            fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`)
         ]);
         if (!resS.ok || !resP.ok) {
             throw new Error(`HTTP error! Status: ${resP.status} & ${resS.status}`);
@@ -470,6 +479,7 @@ async function linkProductToSupplier(productName, supplierName){
             productName: productName
         };
         const resPOST = await fetch('http://localhost:3000/supplierProduct', {
+        const resPOST = await fetch('https://backend-ims-zuqh.onrender.com/api/products/supplier', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -514,6 +524,7 @@ checkSave.addEventListener("click", async (e) => {
         };
         console.log(importNote);
         const resPOST = await fetch('http://localhost:3000/Imports', {
+        const resPOST = await fetch('https://backend-ims-zuqh.onrender.com/api/imports/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
