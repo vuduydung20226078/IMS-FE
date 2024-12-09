@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IM Systems</title>
+    <link rel="stylesheet" href="./introIMS.css">
+</head>
+
+<body id="body">
+    <!-- Navbar -->
+    <div class="l-navbar show" id="navbar">
+        <div class="nav">
+            <div>
+                <a href="#" class="nav_logo">
+                    <ion-icon name="logo-octocat" class="nav_logo-icon"></ion-icon>
+                    <span class="nav_logo-text">IM Systems</span>
+                </a>
+                <div class="nav_toggle" id="nav_toggle">
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                </div>
+                <ul class="nav_list">
+                    <a href="#" class="nav_link">
+                        <ion-icon name="grid" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Dashboard</span>
+                    </a>
+                    <a href="#" class="nav_link active">
+                        <ion-icon name="file-tray-stacked" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Product Management</span>
+                    </a>
+                    <a href="./supplierManagement.html" class="nav_link">
+                        <ion-icon name="people" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Partner Management</span>
+                    </a>
+                    <a href="./phieuXK.html" class="nav_link">
+                        <ion-icon name="cloud-download" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Inventory Out</span>
+                    </a>
+                    <a href="./phieunk.html" class="nav_link">
+                        <ion-icon name="cloud-upload" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Inventory In</span>
+                    </a>
+                    <a href="#" class="nav_link">
+                        <ion-icon name="cart" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Order Management</span>
+                    </a>
+                    <a href="#" class="nav_link">
+                        <ion-icon name="create" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Report & Analytics</span>
+                    </a>
+                </ul>
+            </div>
+            <div>
+                <a href="./loginRegister.html" class="nav_link" id="logout">
+                    <ion-icon name="log-out" class="nav_icon"></ion-icon>
+                    <span class="nav_text">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Dropdown menu profile -->
+    <div class="menu-profile">
+        <div class="menu-profile-icon">
+            <ion-icon name="notifications" class="noti-icon"></ion-icon>
+            <img src="\Assets\user0.png" class="user-pic" id="userpic">
+        </div>
+        <div class="drop-menu-profile" id="drop-menu-profile">
+            <a id="username" href="#"> <img src="\Assets\user0.png" class="user-pic-in">Username0 </a>
+            <a href="#">
+                <ion-icon name="person"></ion-icon> Profile
+            </a>
+            <a href="#">
+                <ion-icon name="settings"></ion-icon> Settings
+            </a>
+            <a href="#">
+                <ion-icon name="help-circle"></ion-icon> Help & Support
+            </a>
+            <a href="#">
+                <ion-icon name="swap-horizontal"></ion-icon> Convert Account
+            </a>
+        </div>
+    </div>
+    <!-- filter text -->
+    <button id="filter-menu-btn"><ion-icon id="m-filter-icon" name="menu" style="color: #fff; font-size: 200%;"></ion-icon></button>
+    <ul id="filter-menu">
+        <li>Filter by category
+            <ul class="filter-sub-menu">
+                <li>0 - 10</li>
+                <li>11 - 100</li>
+                <li>101 - 1000</li>
+                <li>1001+</li>
+                <li>0 - 10</li>
+                <li>11 - 100</li>
+                <li>101 - 1000</li>
+                <li>1001+</li>
+                <li>0 - 10</li>
+                <li>11 - 100</li>
+                <li>101 - 1000</li>
+            </ul>
+        </li>
+        <li>Filter by quantity
+            <ul id="filter-by-quantity" class="filter-sub-menu">
+                <li>0 - 10</li>
+                <li>11 - 100</li>
+                <li>101 - 1000</li>
+                <li>1001+</li>
+            </ul>
+        </li>
+        <li>Filter by lastupdate
+            <ul id="filter-by-lastupdate" class="filter-sub-menu">
+                <li>1 day</li>
+                <li>1 week</li>
+                <li>1 month</li>
+                <li>1 year</li>
+            </ul>
+        </li>
+        <li>Filter by price
+            <ul id="filter-by-price"class="filter-sub-menu">
+                <li>1k - 100k</li>
+                <li>101k - 500k</li>
+                <li>501k - 1000k</li>
+                <li>1001k+</li>
+            </ul>
+        </li>
+        <li id="see-full-product">See Full Product List</li>
+        
+    </ul>
+
+    <!-- form add products -->
+    <div id="product-management">
+        <button id="add-product-btn" class="add-product-btn">Add Products</button>
+        <form class="product-form" id="product-form">
+            <h2>New Product</h2>
+            <span class="icon-close">
+                <ion-icon name="close"></ion-icon>
+            </span>
+            <input type="text" id="product-name" placeholder="Product Name" required>
+            <input type="text" id="product-unitCal" placeholder="Unit">
+            <input type="text" id="product-price" placeholder="Price" required>
+            <input type="text" id="product-category" placeholder="Category" required>
+            <button id="save-product" class="save-product">Save Product</button>
+        </form>
+    </div>
+    <form action="" id="search-box" onsubmit="return false;">
+        <input type="text" id="search-text" placeholder="What do you want to search?" required>
+        <button id="search-button"><ion-icon name="search" id="search-icon"></ion-icon></button>
+    </form>
+    <button id="view-all-btn">View All</button>
+    <!-- show list products -->
+    <table>
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th id="thName" style="cursor: pointer"><span class="tooltip">Sort by Name?</span>Product Name</th>
+                <th id="thQuantity" style="cursor: pointer"><span class="tooltip">Sort by Quantity?</span>Quantity</th>
+                <th>Unit</th>
+                <th>Category</th>
+                <th id="thPrice" style="cursor: pointer"><span class="tooltip">Sort by Price?</span>Price</th>
+                <th id="thLastUpdate" style="cursor: pointer"><span class="tooltip">Sort by LastUpdate?</span>Last
+                    Update</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+        </tbody>
+    </table>
+
+    <button class="notification-error" id="notification-error">
+        <ion-icon name="alert-circle" class="icon"></ion-icon>
+        <h2 id="content-error"></h2>
+    </button>
+    <button class="notification-success" id="notification-success">
+        <ion-icon name="checkmark" class="icon"></ion-icon>
+        <h2 id="content-success"></h2>
+    </button>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="introIMS.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>
