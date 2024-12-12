@@ -186,7 +186,7 @@ showListNameSupplier();
 //function: fetch name product from dtb and showListNameProduct
 async function fetchNameProduct() {
     try {
-        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/products");
+        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/products/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
