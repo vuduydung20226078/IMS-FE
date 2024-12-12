@@ -201,19 +201,21 @@ async function showListNameProduct() {
     listNameProduct.innerHTML = "";
     products.forEach(product => {
         const nameProduct = `
-               <p class="name-product" data-product-id="${product.productID}">${product.productName}</p>
+                <p class="name-product" data-product-id="${product.productID}">${product.productName}</p>
             `;
         listNameProduct.innerHTML += nameProduct;
-    })
+    });
+
     listNameProduct.addEventListener("click", (e) => {
         if (e.target && e.target.classList.contains("name-product")) {
             const inputProduct = document.getElementById("product-name-input");
             inputProduct.value = e.target.textContent.trim();
-             inputProduct.setAttribute("data-product-id", e.target.getAttribute("data-product-id")); // Gán productID
+            inputProduct.setAttribute("data-product-id", e.target.getAttribute("data-product-id")); // Gán productID
             listNameProduct.classList.remove('active');
-        };
+        }
     });
 };
+
 showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierName) {
