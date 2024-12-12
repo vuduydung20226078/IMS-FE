@@ -201,7 +201,7 @@ async function showListNameProduct() {
     listNameProduct.innerHTML = "";
     products.forEach(product => {
         const nameProduct = `
-                <p class="name-product" id="name-product-${product.productID}" >${product.productName}</p>
+               <p class="name-product" data-product-id="${product.productID}">${product.productName}</p>
             `;
         listNameProduct.innerHTML += nameProduct;
     })
