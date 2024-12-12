@@ -217,7 +217,7 @@ showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierName) {
     try {
-        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/supplier/${supplierName}`);
+        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
