@@ -209,6 +209,7 @@ async function showListNameProduct() {
         if (e.target && e.target.classList.contains("name-product")) {
             const inputProduct = document.getElementById("product-name-input");
             inputProduct.value = e.target.textContent.trim();
+             inputProduct.setAttribute("data-product-id", e.target.getAttribute("data-product-id")); // Gán productID
             listNameProduct.classList.remove('active');
         };
     });
@@ -261,11 +262,23 @@ supplierInput.addEventListener("input", showProductsBySupplier);
 //gen info supplier
 async function genInfoToForm() {
     const supplierName = document.getElementById("supplier-name-input").value;
+
+    // Fetch thông tin nhà cung cấp
     const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
     const suppliers = await dataS.json();
-    const productName = document.getElementById("product-name-input").value;
-    const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/${productName}`);
+
+    // Lấy productID từ input hoặc danh sách
+    const productID = document.getElementById("product-name-input").getAttribute("data-product-id");
+    if (!productID) {
+        alert("Please select a valid product from the list.");
+        return;
+    }
+
+    // Fetch thông tin sản phẩm theo productID
+    const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/search/${productID}`);
     const products = await dataP.json();
+
+    // Tạo thông tin form
     const formPhieuNK = document.getElementById("inforSupplierProduct");
     const productDiv = document.createElement("div");
     productDiv.classList.add("product");
@@ -293,10 +306,11 @@ async function genInfoToForm() {
             </div>
     `;
     formPhieuNK.appendChild(productDiv);
-    //event accept
-    bindAcceptProductEvent(productDiv);
 
+    // Event accept
+    bindAcceptProductEvent(productDiv);
 }
+
 const addButton = document.getElementById("add-btn");
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
