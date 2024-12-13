@@ -170,6 +170,7 @@ async function showListNameSupplier() {
         console.log(name);
         const nameSupplier = `
             <p class="name-supplier" id="name-supplier-${supplier.supplierID}">${supplier.name}</p>
+            <p class="name-supplier" data-id="${supplier.supplierID}" id="name-supplier-${supplier.supplierID}">${supplier.name}</p>
         `;
         listNameSupplier.innerHTML += nameSupplier;
     })
@@ -177,6 +178,8 @@ async function showListNameSupplier() {
         if (e.target && e.target.classList.contains("name-supplier")) {
             const inputSupplier = document.getElementById("supplier-name-input");
             inputSupplier.value = e.target.textContent.trim();
+            const idSupplier = e.target.getAttribute("data-id");
+            inputSupplier.setAttribute("data-id", idSupplier);
             listNameSupplier.classList.remove('active');
             showProductsBySupplier();
         };
@@ -201,7 +204,11 @@ async function showListNameProduct() {
     listNameProduct.innerHTML = "";
     products.forEach(product => {
         const nameProduct = `
+<<<<<<< Updated upstream
                 <p class="name-product" data-product-id="${product.productID}">${product.productName}</p>
+=======
+                <p class="name-product" data-id="${product.productID}" id="name-product-${product.productID}" >${product.productName}</p>
+>>>>>>> Stashed changes
             `;
         listNameProduct.innerHTML += nameProduct;
     });
@@ -219,8 +226,13 @@ async function showListNameProduct() {
 showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierName) {
+async function fetchProductsBySupplierName(supplierID) {
     try {
+<<<<<<< Updated upstream
         const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
+=======
+        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/supplier/${supplierID}`);
+>>>>>>> Stashed changes
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -232,6 +244,9 @@ async function fetchProductsBySupplierName(supplierName) {
 async function showProductsBySupplier() {
     const supplierName = document.getElementById("supplier-name-input").value;
     const products = await fetchProductsBySupplierName(supplierName);
+    const supplierNameInput = document.getElementById("supplier-name-input");
+    const supplierID = supplierNameInput.getAttribute("data-id")
+    const products = await fetchProductsBySupplierName(supplierID);
     console.log(products);
     const listNameProduct = document.getElementById("list-name-product");
     listNameProduct.innerHTML = "";
@@ -312,11 +327,22 @@ async function genInfoToForm() {
     // Event accept
     bindAcceptProductEvent(productDiv);
 }
+<<<<<<< Updated upstream
 
+=======
+const productInput = document.getElementById("product-name-input");
+>>>>>>> Stashed changes
 const addButton = document.getElementById("add-btn");
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
     genInfoToForm();
+    if(supplierInput.value.trim() !== "" && productInput.value.trim() !== ""){
+        supplierInput.disabled = true;
+        supplierInput.style.backgroundColor = "#444";
+        supplierInput.style.color = "#fff";
+        document.getElementById("lock-input-supplier").classList.add("active");
+        genInfoToForm();
+    }
 });
 //gen infor product 2 (if need)
 function bindAcceptProductEvent(productElement) {
@@ -353,6 +379,12 @@ function resetForm() {
 const resetBtn = document.getElementById("reset-phieunk-btn");
 resetBtn.addEventListener("click", (e) => {
     e.preventDefault();
+    supplierInput.disabled = false;
+    supplierInput.value = "";
+    productInput.value = "";
+    supplierInput.style.backgroundColor = "#fff";
+    supplierInput.style.color = "black";
+    document.getElementById("lock-input-supplier").classList.remove("active");
     resetForm();
 });
 //date-in

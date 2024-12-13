@@ -259,6 +259,7 @@ a {
 /* form phieu nhap kho */
 .form-phieu-nhap {
     position: relative;
+    position: absolute;
     width: 90%;
     max-width: 550px;
     max-height: 9999px;
@@ -266,6 +267,7 @@ a {
     margin: 5% auto;
     background-color: #d8e990;
     margin-left: 666px;
+    top: 40px;
     z-index: 1;
 }
 
@@ -449,6 +451,19 @@ a {
     overflow-y: scroll;
     transform: scale(0);
     transition: height .2s ease;
+}
+#lock-input-supplier{
+    position: relative;
+    top: 101px;
+    left: 20px;
+    width: 200px;
+    height: 400px;
+    margin-left: 0px;
+    z-index: -1;
+    opacity: 0;
+}
+#lock-input-supplier.active{
+    z-index: 1001;
 }
 
 #list-name-supplier p,
@@ -689,11 +704,17 @@ a {
         max-height: 200px;
         min-height: 20px;
         top: 354px;
+        top: 103px;
         right: 280px;
 
     }
 
     #plus-button {
         margin-left: 0;
+    }
+     #lock-input-supplier{
+        position: relative;
+        top: 75px;
+        height: 250px;
     }
 }
