@@ -201,11 +201,7 @@ async function showListNameProduct() {
     listNameProduct.innerHTML = "";
     products.forEach(product => {
         const nameProduct = `
-<<<<<<< Updated upstream
-                <p class="name-product" data-product-id="${product.productID}">${product.productName}</p>
-=======
                 <p class="name-product" data-id="${product.productID}" id="name-product-${product.productID}" >${product.productName}</p>
->>>>>>> Stashed changes
             `;
         listNameProduct.innerHTML += nameProduct;
     });
@@ -214,7 +210,8 @@ async function showListNameProduct() {
         if (e.target && e.target.classList.contains("name-product")) {
             const inputProduct = document.getElementById("product-name-input");
             inputProduct.value = e.target.textContent.trim();
-            inputProduct.setAttribute("data-product-id", e.target.getAttribute("data-product-id")); // Gán productID
+            const idProduct = e.target.getAttribute("data-id");
+            inputProduct.setAttribute("data-id", idProduct);// Gán productID
             listNameProduct.classList.remove('active');
         }
     });
@@ -224,11 +221,7 @@ showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierID) {
     try {
-<<<<<<< Updated upstream
-        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
-=======
-        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/supplier/${supplierID}`);
->>>>>>> Stashed changes
+        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierID}/products`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -239,14 +232,14 @@ async function fetchProductsBySupplierName(supplierID) {
 };
 async function showProductsBySupplier() {
     const supplierNameInput = document.getElementById("supplier-name-input");
-    const supplierID = supplierNameInput.getAttribute("data-id")
+    const supplierID = supplierNameInput.getAttribute("data-id");
     const products = await fetchProductsBySupplierName(supplierID);
     console.log(products);
     const listNameProduct = document.getElementById("list-name-product");
     listNameProduct.innerHTML = "";
     products.forEach(product => {
         const nameProduct = `
-             <p class="name-product" id="name-product-${product.productID}" >${product.productName}</p>
+             <p class="name-product" data-id="${product.productID}" id="name-product-${product.productID}" >${product.productName}</p>
         `;
         listNameProduct.innerHTML += nameProduct;
     });
@@ -264,6 +257,8 @@ async function showProductsBySupplier() {
             const inputProduct = document.getElementById("product-name-input");
             inputProduct.value = e.target.textContent.trim();
             listNameProduct.classList.remove('active');
+            const idProduct = e.target.getAttribute("data-id");
+            inputProduct.setAttribute("data-id", idProduct);// Gán productID
         };
     });
 };
@@ -272,23 +267,22 @@ const supplierInput = document.getElementById("supplier-name-input");
 supplierInput.addEventListener("input", showProductsBySupplier);
 //gen info supplier
 async function genInfoToForm() {
-    const supplierName = document.getElementById("supplier-name-input").value;
-
+    const supplierNameInput = document.getElementById("supplier-name-input");
+    const supplierID = supplierNameInput.getAttribute("data-id");
+     // Lấy productID từ input hoặc danh sách
+    const productNameInput = document.getElementById("product-name-input");
+    const productID = productNameInput.getAttribute("data-id");
     // Fetch thông tin nhà cung cấp
-    const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`);
+    try{
+    const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/search/${supplierID}`);
+    if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`)
     const suppliers = await dataS.json();
-
-    // Lấy productID từ input hoặc danh sách
-    const productID = document.getElementById("product-name-input").getAttribute("data-product-id");
-    if (!productID) {
-        alert("Please select a valid product from the list.");
-        return;
-    }
-
+    console.log(suppliers);
     // Fetch thông tin sản phẩm theo productID
     const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/search/${productID}`);
+    if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
     const products = await dataP.json();
-
+    console.log(products);
     // Tạo thông tin form
     const formPhieuNK = document.getElementById("inforSupplierProduct");
     const productDiv = document.createElement("div");
@@ -317,15 +311,13 @@ async function genInfoToForm() {
             </div>
     `;
     formPhieuNK.appendChild(productDiv);
-
     // Event accept
     bindAcceptProductEvent(productDiv);
-}
-<<<<<<< Updated upstream
-
-=======
+    } catch(error){
+        console.error(error);
+    }
+};
 const productInput = document.getElementById("product-name-input");
->>>>>>> Stashed changes
 const addButton = document.getElementById("add-btn");
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -430,6 +422,7 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
             console.log(dataS);
             const inputNameSupplier = document.getElementById("supplier-name-input");
             inputNameSupplier.value = dataS.name;
+            inputNameSupplier.setAttribute("data-id", dataS.supplierID)
             const listNameProduct = document.getElementById("list-name-product");
             showListNameProduct();
             listNameProduct.classList.add("active");
@@ -468,6 +461,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         .then(dataP => {
             const inputNameProduct = document.getElementById("product-name-input");
             inputNameProduct.value = dataP.productName;
+            inputNameProduct.setAttribute("data-id", dataP.productID)
             openAddProduct.classList.remove("active");
             const listNameProduct = document.getElementById("list-name-product");
             listNameProduct.classList.remove("active");
@@ -495,20 +489,13 @@ checkSave.addEventListener("click", async (e) => {
 });
 async function linkProductToSupplier(productName, supplierName){
     try {
-        const [resS, resP] = await Promise.all([
-            fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${productName}`),
-            fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierName}`)
-        ]);
-        if (!resS.ok || !resP.ok) {
-            throw new Error(`HTTP error! Status: ${resP.status} & ${resS.status}`);
-        };
-        const productData = await resS.json();
-        const supplierData = await resP.json();
+        const productNameInput = document.getElementById("product-name-input");
+        const productID = productNameInput.getAttribute("data-id");
+        const supplierNameInput = document.getElementById("supplier-name-input");
+        const supplierID = supplierNameInput.getAttribute("data-id");
         const idSAP = {
-            supplierID: supplierData.supplierID,
-            productID: productData.productID,
-            name: supplierName,
-            productName: productName
+            supplierID: supplierID,
+            productID: productID,
         };
         const resPOST = await fetch('https://backend-ims-zuqh.onrender.com/api/products/supplier', {
             method: 'POST',
@@ -565,6 +552,7 @@ checkSave.addEventListener("click", async (e) => {
             throw new Error(`HTTP error! Status: ${resPOST.status}`);
         };
         const dataIm = await resPOST.json();
+        console.log(dataIm)
         const importID = dataIm.importID;
         const phieuNKData = {
             infoPhieuNK,
