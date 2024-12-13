@@ -258,7 +258,6 @@ a {
 
 /* form phieu nhap kho */
 .form-phieu-nhap {
-    position: relative;
     position: absolute;
     width: 90%;
     max-width: 550px;
@@ -703,7 +702,6 @@ a {
         position: relative;
         max-height: 200px;
         min-height: 20px;
-        top: 354px;
         top: 103px;
         right: 280px;
 

@@ -166,10 +166,7 @@ async function showListNameSupplier() {
     const listNameSupplier = document.getElementById("list-name-supplier");
     listNameSupplier.innerHTML = "";
     suppliers.forEach(supplier => {
-        const name = supplier.name;
-        console.log(name);
         const nameSupplier = `
-            <p class="name-supplier" id="name-supplier-${supplier.supplierID}">${supplier.name}</p>
             <p class="name-supplier" data-id="${supplier.supplierID}" id="name-supplier-${supplier.supplierID}">${supplier.name}</p>
         `;
         listNameSupplier.innerHTML += nameSupplier;
@@ -225,7 +222,6 @@ async function showListNameProduct() {
 
 showListNameProduct();
 //function fetch and show data product by supplierName
-async function fetchProductsBySupplierName(supplierName) {
 async function fetchProductsBySupplierName(supplierID) {
     try {
 <<<<<<< Updated upstream
@@ -242,8 +238,6 @@ async function fetchProductsBySupplierName(supplierID) {
     };
 };
 async function showProductsBySupplier() {
-    const supplierName = document.getElementById("supplier-name-input").value;
-    const products = await fetchProductsBySupplierName(supplierName);
     const supplierNameInput = document.getElementById("supplier-name-input");
     const supplierID = supplierNameInput.getAttribute("data-id")
     const products = await fetchProductsBySupplierName(supplierID);
@@ -335,7 +329,6 @@ const productInput = document.getElementById("product-name-input");
 const addButton = document.getElementById("add-btn");
 addButton.addEventListener("click", (e) => {
     e.preventDefault();
-    genInfoToForm();
     if(supplierInput.value.trim() !== "" && productInput.value.trim() !== ""){
         supplierInput.disabled = true;
         supplierInput.style.backgroundColor = "#444";
