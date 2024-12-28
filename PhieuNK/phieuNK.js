@@ -274,45 +274,45 @@ async function genInfoToForm() {
     const productID = productNameInput.getAttribute("data-id");
     // Fetch thông tin nhà cung cấp
     try{
-    const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/search/${supplierID}`);
-    if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`)
-    const suppliers = await dataS.json();
-    console.log(suppliers);
-    // Fetch thông tin sản phẩm theo productID
-    const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/search/${productID}`);
-    if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
-    const products = await dataP.json();
-    console.log(products);
-    // Tạo thông tin form
-    const formPhieuNK = document.getElementById("inforSupplierProduct");
-    const productDiv = document.createElement("div");
-    productDiv.classList.add("product");
-    productDiv.id = `product-${products.productID}`;
-    productDiv.innerHTML = `
-            <div class="product-info">
-                <span class="delete-product" id="delete-product-${products.productID}" onclick="deleteProduct('${products.productID}')">
-                    <ion-icon name="close"></ion-icon>
-                </span>
-                <div class="product-details">
-                    <h3>Product ID: ${products.productID}</h3>
-                    <p>Product Name: ${products.productName}</p>
-                    <p>UnitCal: ${products.unitCal}</p>
-                    <p>Price: ${products.price.toLocaleString("vi-VN")} VND</p>
-                    <label for="quantity-product-${products.productID}">Quantity:</label>
-                    <input type="number" min="1" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
+        const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/search/${supplierID}`);
+        if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`);
+        const suppliers = await dataS.json();
+        console.log(suppliers);
+        // Fetch thông tin sản phẩm theo productID
+        const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/search/${productID}`);
+        if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
+        const products = await dataP.json();
+        console.log(products);
+        // Tạo thông tin form
+        const formPhieuNK = document.getElementById("inforSupplierProduct");
+        const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
+        productDiv.id = `product-${products.productID}`;
+        productDiv.innerHTML = `
+                <div class="product-info">
+                    <span class="delete-product" id="delete-product-${products.productID}" onclick="deleteProduct('${products.productID}')">
+                        <ion-icon name="close"></ion-icon>
+                    </span>
+                    <div class="product-details">
+                        <h3>Product ID: ${products.productID}</h3>
+                        <p>Product Name: ${products.productName}</p>
+                        <p>UnitCal: ${products.unitCal}</p>
+                        <p>Price: ${products.price.toLocaleString("vi-VN")} VND</p>
+                        <label for="quantity-product-${products.productID}">Quantity:</label>
+                        <input type="number" min="1" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
+                    </div>
+                    <div class="supplier-details">
+                        <h3>Supplier ID: ${suppliers.supplierID}</h3>
+                        <p>Supplier Name: ${suppliers.name}</p>
+                        <p>Supplier Contact: ${suppliers.contactNumber}</p>
+                        <p>Address: ${suppliers.address}</p>
+                        <button class="accept-product-btn">Accept The Product</button>
+                    </div>
                 </div>
-                <div class="supplier-details">
-                    <h3>Supplier ID: ${suppliers.supplierID}</h3>
-                    <p>Supplier Name: ${suppliers.name}</p>
-                    <p>Supplier Contact: ${suppliers.contactNumber}</p>
-                    <p>Address: ${suppliers.address}</p>
-                    <button class="accept-product-btn">Accept The Product</button>
-                </div>
-            </div>
-    `;
-    formPhieuNK.appendChild(productDiv);
-    // Event accept
-    bindAcceptProductEvent(productDiv);
+        `;
+        formPhieuNK.appendChild(productDiv);
+        // Event accept
+        bindAcceptProductEvent(productDiv);
     } catch(error){
         console.error(error);
     }
