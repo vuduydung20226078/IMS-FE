@@ -295,12 +295,12 @@ a {
 }
 
 .product-details,
-.supplier-details {
+.partner-details {
     width: 48%;
 }
 
 .product-details p,
-.supplier-details p {
+.partner-details p {
     margin: 5px 0;
 }
 
@@ -367,8 +367,8 @@ a {
     font-size: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: var(--z-tooltrip);
-    cursor: pointer;
     transform: scale(0);
+    cursor: pointer;
     transition: transform .5s ease, height .2s ease;
 
 }
@@ -410,7 +410,7 @@ a {
 }
 
 #chevron-product-btn,
-#chevron-supplier-btn {
+#chevron-partner-btn {
     position: relative;
     width: 22px;
     height: 22px;
@@ -440,7 +440,7 @@ a {
     font-size: 120%;
 }
 
-#list-name-supplier {
+#list-name-partner {
     position: absolute;
     width: 200px;
     min-height: 20px;
@@ -452,7 +452,7 @@ a {
     transform: scale(0);
     transition: height .2s ease;
 }
-#lock-input-supplier{
+#lock-input-partner{
     position: relative;
     top: 101px;
     left: 20px;
@@ -462,11 +462,11 @@ a {
     z-index: -1;
     opacity: 0;
 }
-#lock-input-supplier.active{
+#lock-input-partner.active{
     z-index: 1001;
 }
 
-#list-name-supplier p,
+#list-name-partner p,
 #list-name-product p {
     position: relative;
     margin: 5px 0;
@@ -475,13 +475,13 @@ a {
     cursor: pointer;
 }
 
-#list-name-supplier p:hover,
+#list-name-partner p:hover,
 #list-name-product p:hover {
     background-color: #444;
 
 }
 
-.name-supplier.selected,
+.name-partner.selected,
 .name-product.selected {
     background-color: #444;
 }
@@ -502,20 +502,13 @@ a {
 }
 
 #list-name-product.active,
-#list-name-supplier.active {
+#list-name-partner.active {
     transform: scale(1);
     background-color: var(--white-color);
 
 }
-#view-all-list{
-    color: blue;
-    cursor: pointer;
-}
-#view-all-list:hover{
-    text-decoration-line: underline;
-}
-#product-form input,
-#supplier-form input {
+
+#partner-form input {
     padding: 10px;
     margin: 5px;
     width: 100%;
@@ -524,8 +517,7 @@ a {
     border-radius: 4px;
 }
 
-#save-product,
-#save-supplier {
+#save-partner {
     padding: 10px;
     margin: 5px;
     width: 100%;
@@ -541,14 +533,11 @@ a {
     transition: 0.5s;
 }
 
-#save-product:hover,
-#save-supplier:hover {
+#save-partner:hover {
     background-color: var(--second-color);
     color: var(--first-color);
 }
-
-.product-form,
-.supplier-form {
+.partner-form {
     position: fixed;
     top: 20%;
     left: 40%;
@@ -568,14 +557,12 @@ a {
     z-index: 1000;
 }
 
-.product-form.active,
-.supplier-form.active {
+.partner-form.active {
     transform: scale(1);
     transition: 0.5s;
 }
 
-#product-form .icon-close-product,
-.icon-close-supplier {
+.icon-close-partner {
     position: absolute;
     top: 0;
     right: 0;
@@ -591,9 +578,7 @@ a {
     cursor: pointer;
     z-index: 1;
 }
-
-#product-form .icon-close-product:hover,
-.icon-close-supplier:hover {
+.icon-close-partner:hover {
     background-color: var(--second-color);
     color: var(--first-color);
 }
@@ -693,7 +678,7 @@ a {
         gap: 250px;
     }
 
-    #list-name-supplier {
+    #list-name-partner {
         max-height: 200px;
         min-height: 20px;
         top: 95px;
@@ -711,7 +696,7 @@ a {
     #plus-button {
         margin-left: 0;
     }
-     #lock-input-supplier{
+     #lock-input-partner{
         position: relative;
         top: 75px;
         height: 250px;
