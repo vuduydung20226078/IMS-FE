@@ -1,3 +1,9 @@
+// document.getElementById("myLink").addEventListener("click", function(event) {
+//     event.preventDefault(); // Ngăn việc load lại trang
+//     window.location.href = "./ManagementSupplier/supplierManagerment.html"
+    
+//     // history.pushState({}, "", "http://localhost:3000/supplierManagement.html"); // Cập nhật URL mà không reload trang
+// });
 
 // show/hidden
 const showMenu = (toggleId, navbarId, bodyId) => {
@@ -59,15 +65,17 @@ const openAddProduct = document.querySelector(".product-form");
 addProductBtn.addEventListener("click", () => {
     openAddProduct.classList.add("active");
     addProductBtn.classList.add("close");
+    document.querySelector('.overlay').classList.add("active");
 });
 closeIcon.addEventListener("click", () => {
     openAddProduct.classList.remove("active");
     addProductBtn.classList.remove("close");
+    document.querySelector('.overlay').classList.remove("active");
 });
 
 // show products
 function showListProducts() {
-    fetch(`https://backend-ims-zuqh.onrender.com/api/products/get-all`)
+    fetch(`http://localhost:3000/products`)
         .then(response => response.json())
         .then(data => {
             let tableBody = document.getElementById('product-table-body');

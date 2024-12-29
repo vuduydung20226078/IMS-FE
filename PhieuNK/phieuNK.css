@@ -64,7 +64,7 @@ a {
     background: var(--first-color);
     padding: 1.25rem 0.5rem 2rem;
     transition: 0.5s;
-    z-index: var(--z-fixed);
+    z-index: 1000;
 }
 
 .nav {
@@ -83,11 +83,11 @@ a {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 0.1rem;
 }
 
 .nav_logo-icon {
-    margin-right: 0.75rem;
+    margin-right: 1.2rem;
     width: 30px;
     height: 30px;
     color: #b2cb40;
@@ -135,7 +135,7 @@ a {
 
 .nav_icon {
     font-size: 1.5rem;
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
 }
 
 .nav_text {
@@ -225,7 +225,7 @@ a {
     width: 200px;
     overflow: hidden;
     flex-direction: column;
-    z-index: var(--z-modal);
+    z-index: 499;
     transform: scale(0);
     transition: transform .5s ease, height .2s ease;
 
@@ -255,7 +255,40 @@ a {
 .drop-menu-profile a .user-pic-in {
     margin-right: 8px;
 }
-
+/* notification */
+.notification {
+    position: fixed;
+    top: -100px; 
+    left: 55%;
+    transform: translateX(-50%);
+    display: inline-block;
+    white-space: nowrap;
+    width: auto;
+    background-color: #41eea0;
+    color: black;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+}
+.notification.show {
+    top: 0;
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 500;
+}
+.overlay.active {
+    display: block;
+}
 /* form phieu nhap kho */
 .form-phieu-nhap {
     position: absolute;
@@ -514,6 +547,7 @@ a {
 #view-all-list:hover{
     text-decoration-line: underline;
 }
+
 #product-form input,
 #supplier-form input {
     padding: 10px;
@@ -589,7 +623,7 @@ a {
     align-items: center;
     border-bottom-left-radius: 20px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 1000;
 }
 
 #product-form .icon-close-product:hover,
@@ -711,7 +745,7 @@ a {
     #plus-button {
         margin-left: 0;
     }
-     #lock-input-supplier{
+    #lock-input-supplier{
         position: relative;
         top: 75px;
         height: 250px;

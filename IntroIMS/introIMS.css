@@ -83,11 +83,11 @@ a {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 0.1rem;
 }
 
 .nav_logo-icon {
-    margin-right: 0.75rem;
+    margin-right: 1.2rem;
     width: 30px;
     height: 30px;
     color: #b2cb40;
@@ -135,7 +135,7 @@ a {
 
 .nav_icon {
     font-size: 1.5rem;
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
 }
 
 .nav_text {
@@ -252,7 +252,19 @@ a {
 .drop-menu-profile a .user-pic-in {
     margin-right: 8px;
 }
-
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 500;
+}
+.overlay.active {
+    display: block;
+}
 /* module2 */
 #search-box {
     position: fixed;
@@ -260,7 +272,7 @@ a {
     right: 30%;
     background: #fff;
     border-radius: 30px;
-    z-index: 1000;
+    z-index: 499;
 }
 
 #search-box #search-text {
@@ -653,7 +665,7 @@ table .edit-button:hover {
     width: 200px;
     display: none;
     transition: 0.4s;
-    z-index: 1000;
+    z-index: 499;
 }
 
 #filter-menu.active {
@@ -685,7 +697,7 @@ table .edit-button:hover {
     background-color: #082033;
     display: none;
     transition: 0.5s;
-    z-index: 1000;
+    z-index: 499;
 }
 
 .filter-sub-menu li {

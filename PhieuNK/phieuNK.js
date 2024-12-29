@@ -37,6 +37,29 @@ const dropDownProfile = (menuId, userpicId) => {
 
 };
 dropDownProfile('drop-menu-profile', 'userpic');
+// show notification
+function notification(content, isSuccess){
+    const notification = document.getElementById('notification');
+    if(isSuccess){
+        notification.innerHTML = `
+            <ion-icon name="checkmark-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `#41eea0`;
+        notification.style.color = 'black';
+    } else {
+        notification.innerHTML = `
+            <ion-icon name="alert-circle-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `red`;
+        notification.style.color = '#ededed';
+    }
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 0);
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3500); 
+}
 //set username from sessionStorage
 const usernameNK = sessionStorage.getItem('username');
 if (usernameNK) {
@@ -133,25 +156,29 @@ addProductBtn.addEventListener("click", () => {
     openAddProduct.classList.add("active");
     addProductBtn.classList.add("close");
     openAddSupplier.classList.remove("active");
+    document.querySelector('.overlay').classList.add("active");
 });
 closeProductIcon.addEventListener("click", () => {
     openAddProduct.classList.remove("active");
     addProductBtn.classList.remove("close");
+    document.querySelector('.overlay').classList.remove("active");
 });
 
 addSupplierBtn.addEventListener("click", () => {
     openAddSupplier.classList.add("active");
     addSupplierBtn.classList.add("close");
     openAddProduct.classList.remove("active");
+    document.querySelector('.overlay').classList.add("active");
 });
 closeSupplierIcon.addEventListener("click", () => {
     openAddSupplier.classList.remove("active");
     addSupplierBtn.classList.remove("close");
+    document.querySelector('.overlay').classList.remove("active");
 });
 //function: fetch name supplier from dtb and showListNameSupplier
 async function fetchNameSupplier() {
     try {
-        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/suppliers");
+        const response = await fetch("http://localhost:3000/api/suppliers/getAll-name");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -186,7 +213,7 @@ showListNameSupplier();
 //function: fetch name product from dtb and showListNameProduct
 async function fetchNameProduct() {
     try {
-        const response = await fetch("https://backend-ims-zuqh.onrender.com/api/products/get-all");
+        const response = await fetch("http://localhost:3000/api/products/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -221,7 +248,7 @@ showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierID) {
     try {
-        const response = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/${supplierID}/products`);
+        const response = await fetch(`http://localhost:3000/api/suppliers/${supplierID}/products`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -274,12 +301,12 @@ async function genInfoToForm() {
     const productID = productNameInput.getAttribute("data-id");
     // Fetch thông tin nhà cung cấp
     try{
-        const dataS = await fetch(`https://backend-ims-zuqh.onrender.com/api/suppliers/search/${supplierID}`);
+        const dataS = await fetch(`http://localhost:3000/api/suppliers/search/${supplierID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`);
         const suppliers = await dataS.json();
         console.log(suppliers);
         // Fetch thông tin sản phẩm theo productID
-        const dataP = await fetch(`https://backend-ims-zuqh.onrender.com/api/products/search/${productID}`);
+        const dataP = await fetch(`http://localhost:3000/api/products/search/${productID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
         const products = await dataP.json();
         console.log(products);
@@ -299,7 +326,7 @@ async function genInfoToForm() {
                         <p>UnitCal: ${products.unitCal}</p>
                         <p>Price: ${products.price.toLocaleString("vi-VN")} VND</p>
                         <label for="quantity-product-${products.productID}">Quantity:</label>
-                        <input type="number" min="1" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
+                        <input type="number" value="1" min="1" oninput="checkValidInput(this)" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
                     </div>
                     <div class="supplier-details">
                         <h3>Supplier ID: ${suppliers.supplierID}</h3>
@@ -311,11 +338,20 @@ async function genInfoToForm() {
                 </div>
         `;
         formPhieuNK.appendChild(productDiv);
+        notification("Fill in the form successfully", true);
         // Event accept
         bindAcceptProductEvent(productDiv);
     } catch(error){
         console.error(error);
+        notification(`Error: ${error.message}`, false);
     }
+};
+// check valid input in form 
+function checkValidInput(elementInput){
+    const min = elementInput.min;
+    if(elementInput.value < min){
+        elementInput.value = min;
+    };
 };
 const productInput = document.getElementById("product-name-input");
 const addButton = document.getElementById("add-btn");
@@ -326,6 +362,8 @@ addButton.addEventListener("click", (e) => {
         supplierInput.style.backgroundColor = "#444";
         supplierInput.style.color = "#fff";
         document.getElementById("lock-input-supplier").classList.add("active");
+        document.getElementById("add-supplier-btn").disabled = true;
+        document.getElementById("add-supplier-btn").style.color = "#dedede";
         genInfoToForm();
     }
 });
@@ -353,13 +391,16 @@ function deleteProduct(productID) {
     const product = document.getElementById(`product-${productID}`);
     product.remove();
     calculateTotals();
-
-};
+    notification("Delete successfully", true);
+}
 //reset form phieu nk
 function resetForm() {
     document.getElementById("inforSupplierProduct").innerHTML = "";
     document.getElementById("total-price").innerText = "";
     document.getElementById("total-product").innerText = "";
+    document.getElementById("add-supplier-btn").disabled = false;
+    document.getElementById("add-supplier-btn").style.color = "black";
+    notification("Reset successfully", true);
 };
 const resetBtn = document.getElementById("reset-phieunk-btn");
 resetBtn.addEventListener("click", (e) => {
@@ -408,7 +449,7 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         contactNumber: document.getElementById("number-contact").value,
         address: document.getElementById("address").value
     };
-    fetch('https://backend-ims-zuqh.onrender.com/api/suppliers', {
+    fetch('http://localhost:3000/api/suppliers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSupplier)
@@ -428,9 +469,11 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
             listNameProduct.classList.add("active");
             const listNameSupplier = document.getElementById("list-name-supplier");
             listNameSupplier.classList.remove("active");
+            notification("New supplier added successfully", true);
         })
         .catch(error => {
             console.error("Error:", error);
+            notification(`Error: ${error.status}`, false);
         });
 });
 //function add products
@@ -444,7 +487,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`https://backend-ims-zuqh.onrender.com/api/products`, {
+    fetch(`http://localhost:3000/api/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -465,54 +508,18 @@ document.getElementById("save-product").addEventListener("click", (e) => {
             openAddProduct.classList.remove("active");
             const listNameProduct = document.getElementById("list-name-product");
             listNameProduct.classList.remove("active");
+            notification("New product added successfully", true);
         })
         .catch(error => {
             console.error("Error: ", error);
+            notification(`Error: ${error.status}`, false);
         });
 });
 // function link productID to supplierID
 const checkSave = document.getElementById("check-save");
-checkSave.addEventListener("click", async (e) => {
+checkSave.addEventListener("click", async function (e){
     e.preventDefault();
-    checkSave.classList.remove("active");
-    const infoPhieuNK = Array.from(document.querySelectorAll(".product")).map((product) => {
-        return {
-            productName: product.querySelector("p:nth-child(2)").textContent.split(": ")[1],
-            name: product.querySelector(".supplier-details p:nth-child(2)").textContent.split(": ")[1]
-        };
-    });
-    infoPhieuNK.forEach(info => {
-        const productName = info.productName;
-        const supplierName = info.name;
-        linkProductToSupplier(productName, supplierName);
-    });
-});
-async function linkProductToSupplier(productName, supplierName){
-    try {
-        const productNameInput = document.getElementById("product-name-input");
-        const productID = productNameInput.getAttribute("data-id");
-        const supplierNameInput = document.getElementById("supplier-name-input");
-        const supplierID = supplierNameInput.getAttribute("data-id");
-        const idSAP = {
-            supplierID: supplierID,
-            productID: productID,
-        };
-        const resPOST = await fetch('https://backend-ims-zuqh.onrender.com/api/products/supplier', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(idSAP)
-        });
-        if (!resPOST.ok) {
-            throw new Error(`HTTP error! Status: ${resPOST.status}`);
-        };
-    } catch (error) {
-        console.error(error);
-    };
-};
-checkSave.addEventListener("click", async (e) => {
-    e.preventDefault();
+    this.classList.remove("active");
     //save info phieu nk in session storage
     const infoPhieuNK = Array.from(document.querySelectorAll(".product")).map((product) => {
         return {
@@ -541,7 +548,7 @@ checkSave.addEventListener("click", async (e) => {
             productIDs: infoPhieuNK.map(info => info.productID)
         };
         console.log(importNote);
-        const resPOST = await fetch('https://backend-ims-zuqh.onrender.com/api/imports/create', {
+        const resPOST = await fetch('http://localhost:3000/api/imports/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -566,6 +573,7 @@ checkSave.addEventListener("click", async (e) => {
 
     } catch (error) {
         console.error(error);
+        notification(`Error: ${error.status}`, false)
     };
 });
 

@@ -73,6 +73,31 @@ clickChevronProduct.addEventListener("click", (e) => {
     e.preventDefault();
     listProductName.classList.toggle("active");
 });
+
+// show notification
+function notification(content, isSuccess){
+    const notification = document.getElementById('notification');
+    if(isSuccess){
+        notification.innerHTML = `
+            <ion-icon name="checkmark-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `#41eea0`;
+        notification.style.color = 'black';
+    } else {
+        notification.innerHTML = `
+            <ion-icon name="alert-circle-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `red`;
+        notification.style.color = '#ededed';
+    }
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 0);
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3500); 
+}
+
 //Show list partnerName when entering input
 const enterInputPartner = document.getElementById("partner-name-input");
 const enterInputProduct = document.getElementById("product-name-input");
@@ -126,10 +151,12 @@ addPartnerBtn.addEventListener("click", () => {
     openAddPartner.classList.add("active");
     addPartnerBtn.classList.add("close");
     openAddProduct.classList.remove("active");
+    document.querySelector('.overlay').classList.add('active');
 });
 closePartnerIcon.addEventListener("click", () => {
     openAddPartner.classList.remove("active");
     addPartnerBtn.classList.remove("close");
+    document.querySelector('.overlay').classList.remove('active');
 });
 //function: fetch name partner from dtb and showListNamePartner
 async function fetchNamePartner() {
@@ -235,7 +262,7 @@ async function genInfoToForm() {
                         <p>UnitCal: ${products.unitCal}</p>
                         <p>Price: ${products.price.toLocaleString("vi-VN")} VND</p>
                         <label for="quantity-product-${products.productID}">Quantity:</label>
-                        <input type="number" min="1" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
+                        <input type="number" min="1" value="1" oninput="checkValidInput(this)" placeholder="Quantity" id="quantity-product-${products.productID}" class="input-quantity" required>
                     </div>
                     <div class="partner-details">
                         <h3>Partner ID: ${partners.partnerID}</h3>
@@ -247,11 +274,20 @@ async function genInfoToForm() {
                 </div>
         `;
         formPhieuNK.appendChild(productDiv);
+        notification("Fill in the form successfully", true);
         // Event accept
         bindAcceptProductEvent(productDiv);
     } catch(error){
         console.error(error);
+        notification(`Error: ${error.status}`, false);
     }
+};
+// check valid input in form 
+function checkValidInput(elementInput){
+    const min = elementInput.min;
+    if(elementInput.value < min){
+        elementInput.value = min;
+    };
 };
 const partnerInput = document.getElementById("partner-name-input");
 const productInput = document.getElementById("product-name-input");
@@ -263,6 +299,8 @@ addButton.addEventListener("click", (e) => {
         partnerInput.style.backgroundColor = "#444";
         partnerInput.style.color = "#fff";
         document.getElementById("lock-input-partner").classList.add("active");
+        document.getElementById("add-partner-btn").disabled = true;
+        document.getElementById("add-partner-btn").style.color = "#dedede";
         genInfoToForm();
     }
 });
@@ -285,8 +323,8 @@ function bindAcceptProductEvent(productElement) {
                 quantityInput.disabled = true;
                 calculateTotals();
             } else {
-                alert("Số lượng sản phẩm trong kho không đủ");
-            }    
+                notification("The quantity of this product in stock is not enough", false);
+            };
         });
     });
 };
@@ -295,13 +333,16 @@ function deleteProduct(productID) {
     const product = document.getElementById(`product-${productID}`);
     product.remove();
     calculateTotals();
-
+    notification("Deleted successfully!", true);
 };
 //reset form phieu nk
 function resetForm() {
     document.getElementById("inforPartnerProduct").innerHTML = "";
     document.getElementById("total-price").innerText = "";
     document.getElementById("total-product").innerText = "";
+    document.getElementById("add-partner-btn").disabled = false;
+    document.getElementById("add-partner-btn").style.color = "black";
+    notification("Reseted successfully!", true);
 };
 const resetBtn = document.getElementById("reset-phieunk-btn");
 resetBtn.addEventListener("click", (e) => {
@@ -370,9 +411,11 @@ document.getElementById("save-partner").addEventListener("click", (e) => {
             listNameProduct.classList.add("active");
             const listNamePartner = document.getElementById("list-name-partner");
             listNamePartner.classList.remove("active");
+            notification("New partner added successfully!", true);
         })
         .catch(error => {
             console.error("Error:", error);
+            notification(`Error: ${error.status}`);
         });
 });
 
@@ -435,6 +478,7 @@ checkSave.addEventListener("click", async (e) => {
 
     } catch (error) {
         console.error(error);
+        notification(`Error: ${error.status}`);
     };
 });
 

@@ -26,7 +26,7 @@
                         <ion-icon name="grid" class="nav_icon"></ion-icon>
                         <span class="nav_text">Dashboard</span>
                     </a>
-                    <a href="/IntroIMS/introIMS.html" class="nav_link">
+                    <a href="./introIMS.html" class="nav_link">
                         <ion-icon name="file-tray-stacked" class="nav_icon"></ion-icon>
                         <span class="nav_text">Product Management</span>
                     </a>
@@ -82,6 +82,12 @@
             </a>
         </div>
     </div>
+     <!-- thông báo chung -->
+    <div id="notification" class="notification">
+        <ion-icon name="checkmark-outline"></ion-icon> Đăng nhập thành công!
+    </div>
+    <!-- lớp phủ -->
+     <div id="overlay" class="overlay"></div>
     <!-- add info of supplier and product to phieunk-->
     <div id="input-add">
         <div>
@@ -98,7 +104,8 @@
         </div>
         <button id="add-btn">Add</button>
     </div>
-    <button class="list-infor" id="list-name-supplier"></button>
+    <button class="list-infor" id="list-name-supplier">
+    </button>
     <div id="lock-input-supplier"></div>
     <button class="list-infor" id="list-name-product"></button>
     
@@ -140,10 +147,6 @@
         <input type="text" id="address" placeholder="Address" required>
         <button id="save-supplier" class="save-supplier"  type="button">Save Supplier</button>
     </form>
-
-
-
-
 
     <script src="phieuNK.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
