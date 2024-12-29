@@ -83,11 +83,11 @@ a {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
-    padding: 0 0.5rem;
+    padding: 0 0.1rem;
 }
 
 .nav_logo-icon {
-    margin-right: 0.75rem;
+    margin-right: 1.2rem;
     width: 30px;
     height: 30px;
     color: #b2cb40;
@@ -135,7 +135,7 @@ a {
 
 .nav_icon {
     font-size: 1.5rem;
-    margin-right: 0.75rem;
+    margin-right: 0.5rem;
 }
 
 .nav_text {
