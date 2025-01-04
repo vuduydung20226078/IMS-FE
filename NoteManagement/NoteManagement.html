@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IM Systems</title>
+    <link rel="stylesheet" href="NoteManagement.css">
+    <link rel="stylesheet" href="/PhieuNK/phieuNK.css">
+</head>
+
+<body id="body">
+    <!-- Navbar -->
+    <style>
+        .form-phieu-nhap {
+            position: fixed;
+            right: 400px;
+            top: -20px;
+            background-color: #fff;
+            z-index: 501;
+            display: none;
+        }
+        #close-form-note{
+            z-index: 501;
+            position: absolute;
+            right: 0;
+            width: 25px;
+            height: 25px;
+            background-color: #8e8c8c;
+            border-bottom-left-radius: 10px;
+            font-size: 150%;
+            cursor: pointer;
+        }
+        #close-form-note:hover, #print-icon:hover{
+            background-color: #333;
+            color: #dedede;
+        }
+        #print-icon{
+            position: absolute;
+            font-size: 150%;
+            z-index: 501;
+            width: 25px;
+            height: 25px;
+            background-color: #8e8c8c;
+            cursor: pointer;
+        }
+         @media (max-width: 768px) {
+            .form-phieu-nhap {
+                width: 550px;
+                top: 40px;
+                right: 0px;
+            }
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #form-phieu-nhap, #form-phieu-nhap * {
+                visibility: visible;
+            }
+            #close-form-note{
+                visibility: hidden;
+            }
+            #print-icon{
+                visibility: hidden;
+            }
+            #form-phieu-nhap {      
+                position: absolute;
+                right: 200px;
+                height: auto;
+                width: 1000px;
+            
+            }
+            #form-phieu-nhap h2 {
+                font-size: 20px;
+            }
+            #id-phieu-nhap, #infoSupplierProduct{
+                font-size: 16px;
+            }
+            @page {
+                padding-right: 10px;
+                margin-top: 0;
+                margin-bottom: 0;
+                width: 100%;
+            }
+        }
+    </style>
+    <div class="l-navbar show" id="navbar">
+        <div class="nav">
+            <div>
+                <a href="#" class="nav_logo">
+                    <ion-icon name="logo-octocat" class="nav_logo-icon"></ion-icon>
+                    <span class="nav_logo-text">IM Systems</span>
+                </a>
+                <div class="nav_toggle" id="nav_toggle">
+                    <ion-icon name="chevron-back-outline"></ion-icon>
+                </div>
+                <ul class="nav_list">
+                    <a href="#" class="nav_link">
+                        <ion-icon name="grid" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Dashboard</span>
+                    </a>
+                    <a href="./introIMS.html" class="nav_link">
+                        <ion-icon name="file-tray-stacked" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Product Management</span>
+                    </a>
+                    <a href="./supplierManagement.html" class="nav_link">
+                        <ion-icon name="people" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Partner Management</span>
+                    </a>
+                    <a href="./phieuXK.html" class="nav_link">
+                        <ion-icon name="cloud-download" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Inventory Out</span>
+                    </a>
+                    <a href="#" class="nav_link active">
+                        <ion-icon name="cloud-upload" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Inventory In</span>
+                    </a>
+                    <a href="#" class="nav_link">
+                        <ion-icon name="cart" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Order Management</span>
+                    </a>
+                    <a href="#" class="nav_link">
+                        <ion-icon name="create" class="nav_icon"></ion-icon>
+                        <span class="nav_text">Report & Analytics</span>
+                    </a>
+                </ul>
+            </div>
+            <div>
+                <a href="./loginRegister.html" class="nav_link" id="logout">
+                    <ion-icon name="log-out" class="nav_icon"></ion-icon>
+                    <span class="nav_text">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Dropdown menu profile -->
+    <div class="menu-profile">
+        <div class="menu-profile-icon">
+            <ion-icon name="notifications" class="noti-icon"></ion-icon>
+            <img src=".\Assets\user0.png" class="user-pic" id="userpic">
+        </div>
+    </div>
+    <div class="drop-menu-profile" id="drop-menu-profile">
+            <a href="#" id="username"> <img src=".\Assets\user0.png" class="user-pic-in">Username0 </a>
+            <a href="#">
+                <ion-icon name="person"></ion-icon> Profile
+            </a>
+            <a href="#">
+                <ion-icon name="settings"></ion-icon> Settings
+            </a>
+            <a href="#">
+                <ion-icon name="help-circle"></ion-icon> Help & Support
+            </a>
+            <a href="#">
+                <ion-icon name="swap-horizontal"></ion-icon> Convert Account
+            </a>
+    </div>
+     <!-- lớp phủ -->
+    <div id="overlay" class="overlay"></div>
+     <!-- show list notes -->
+    <h2 id="type-note-chosen">Stock In Note Table
+        <ion-icon name="chevron-down-outline" id="icon-chevron-note"></ion-icon>
+    </h2>
+    <h2 id="type-note-option">Stock Out Note Table</h2>
+    
+    <table id="table-list-info-note">
+        <thead>
+            <tr id="filter">
+                <th><ion-icon name="color-filter" title="Filter"></ion-icon></th>
+                <th>
+                    <label for="startDate" id="tb-filter-by-SoP">By Supplier ID:</label>
+                    <input type="number" id="input-SoP-id" name="by-SoP-id">
+                </th>
+                <th>
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" id="startDate" name="startDate">
+                </th>
+                <th>
+                    <label for="endDate">End Date:</label>
+                    <input type="date" id="endDate" name="endDate">
+                </th>
+                <th>
+                    <label for="startDate" >Minimum Quantity:</label>
+                    <input type="number" id="minimumQuantity" name="minimum">
+                </th>
+                <th>
+                    <label for="startDate">Maximum Quantity:</label>
+                    <input type="number" id="maximumQuantity" name="maximum">
+                </th>
+            </tr>
+            <tr>
+                <th>ID Note</th>
+                <th id="tb-partner-or-supplier">Supplier ID</th>
+                <th>List Product ID</th>
+                <th>Total Quantity</th>
+                <th>Total Price</th>
+                <th>Creation Date</th>
+            </tr>
+            
+        </thead>
+        <tbody id="body-list-note">
+            <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>[1, 2]</td>
+                <td>40</td>
+                <td>10000000</td>
+                <td>29/12/2024</td>
+            </tr>
+             <tr>
+                <td>1</td>
+                <td>2</td>
+                <td>[1, 2]</td>
+                <td>40</td>
+                <td>10000000</td>
+                <td>29/12/2024</td>
+            </tr>
+        </tbody>
+    </table>
+    <form class="form-phieu-nhap" id="form-phieu-nhap">
+        <ion-icon name="close-outline" id="close-form-note"></ion-icon>
+        <ion-icon id="print-icon" name="print" title="Print" onclick="window.print()"></ion-icon>
+        <h2>Inventory Receipt Note</h2>
+        <div id="id-phieu-nhap">Note ID: </div>
+        <div id="inforSupplierProduct">
+            <div class="product">
+                <div class="product-info">
+                    <div class="product-details">
+                        <h3>Product ID:</h3>
+                        <p>Product Name:</p>
+                        <p>UnitCal:</p>
+                        <p>Price:</p>
+                        <p>Quantity:</p>
+                    </div>
+                    <div class="supplier-details">
+                        <h3>Supplier ID:</h3>
+                        <p>Supplier Name:</p>
+                        <p>Supplier Contact:</p>
+                        <p>Address:</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <span id="total-price"></span>
+            <span id="total-product"></span>
+            <footer id="date-in" style="font-size: 16px; padding-right: 5px;"></footer>
+        </div>
+
+    </form>
+    <script src="NoteManagement.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+</body>
+
+</html>
