@@ -161,7 +161,7 @@ closePartnerIcon.addEventListener("click", () => {
 //function: fetch name partner from dtb and showListNamePartner
 async function fetchNamePartner() {
     try {
-        const response = await fetch("http://localhost:3000/api/partners/getAll-name");
+        const response = await fetch("http://160.191.50.248:8080/api/partners/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -195,7 +195,7 @@ showListNamePartner();
 //function: fetch name product from dtb and showListNameProduct
 async function fetchNameProduct() {
     try {
-        const response = await fetch("http://localhost:3000/api/products/get-all");
+        const response = await fetch("http://160.191.50.248:8080/api/products/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -239,11 +239,11 @@ async function genInfoToForm() {
     const quantityData = productNameInput.getAttribute("data-quantity");
 
     try{
-        const dataS = await fetch(`http://localhost:3000/api/partners/search/${partnerID}`);
+        const dataS = await fetch(`http://160.191.50.248:8080/api/partners/search/${partnerID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`);
         const partners = await dataS.json();
         
-        const dataP = await fetch(`http://localhost:3000/api/products/search/${productID}`);
+        const dataP = await fetch(`http://160.191.50.248:8080/api/products/search/${productID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
         const products = await dataP.json();
         // Tạo thông tin form
@@ -391,7 +391,7 @@ document.getElementById("save-partner").addEventListener("click", (e) => {
         contactNumber: document.getElementById("number-contact").value,
         address: document.getElementById("address").value
     };
-    fetch('http://localhost:3000/api/partners', {
+    fetch('http://160.191.50.248:8080/api/partners', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPartner)
@@ -452,7 +452,7 @@ checkSave.addEventListener("click", async (e) => {
             productIDs: infoPhieuXK.map(info => info.productID)
         };
         console.log(exportNote);
-        const resPOST = await fetch('http://localhost:3000/api/exports/create', {
+        const resPOST = await fetch('http://160.191.50.248:8080/api/exports/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

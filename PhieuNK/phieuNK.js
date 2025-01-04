@@ -178,7 +178,7 @@ closeSupplierIcon.addEventListener("click", () => {
 //function: fetch name supplier from dtb and showListNameSupplier
 async function fetchNameSupplier() {
     try {
-        const response = await fetch("http://localhost:3000/api/suppliers/getAll-name");
+        const response = await fetch("http://160.191.50.248:8080/api/suppliers/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -213,7 +213,7 @@ showListNameSupplier();
 //function: fetch name product from dtb and showListNameProduct
 async function fetchNameProduct() {
     try {
-        const response = await fetch("http://localhost:3000/api/products/get-all");
+        const response = await fetch("http://160.191.50.248:8080/api/products/get-all");
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -248,7 +248,7 @@ showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierID) {
     try {
-        const response = await fetch(`http://localhost:3000/api/suppliers/${supplierID}/products`);
+        const response = await fetch(`http://160.191.50.248:8080/api/suppliers/${supplierID}/products`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         };
@@ -301,12 +301,12 @@ async function genInfoToForm() {
     const productID = productNameInput.getAttribute("data-id");
     // Fetch thông tin nhà cung cấp
     try{
-        const dataS = await fetch(`http://localhost:3000/api/suppliers/search/${supplierID}`);
+        const dataS = await fetch(`http://160.191.50.248:8080/api/suppliers/search/${supplierID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`);
         const suppliers = await dataS.json();
         console.log(suppliers);
         // Fetch thông tin sản phẩm theo productID
-        const dataP = await fetch(`http://localhost:3000/api/products/search/${productID}`);
+        const dataP = await fetch(`http://160.191.50.248:8080/api/products/search/${productID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
         const products = await dataP.json();
         console.log(products);
@@ -449,7 +449,7 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         contactNumber: document.getElementById("number-contact").value,
         address: document.getElementById("address").value
     };
-    fetch('http://localhost:3000/api/suppliers', {
+    fetch('http://160.191.50.248:8080/api/suppliers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSupplier)
@@ -487,7 +487,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`http://localhost:3000/api/products`, {
+    fetch(`http://160.191.50.248:8080/api/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -548,7 +548,7 @@ checkSave.addEventListener("click", async function (e){
             productIDs: infoPhieuNK.map(info => info.productID)
         };
         console.log(importNote);
-        const resPOST = await fetch('http://localhost:3000/api/imports/create', {
+        const resPOST = await fetch('http://160.191.50.248:8080/api/imports/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

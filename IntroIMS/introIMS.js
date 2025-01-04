@@ -2,7 +2,7 @@
 //     event.preventDefault(); // Ngăn việc load lại trang
 //     window.location.href = "./ManagementSupplier/supplierManagerment.html"
     
-//     // history.pushState({}, "", "http://localhost:3000/supplierManagement.html"); // Cập nhật URL mà không reload trang
+//     // history.pushState({}, "", "http://160.191.50.248:8080/supplierManagement.html"); // Cập nhật URL mà không reload trang
 // });
 
 // show/hidden
@@ -75,7 +75,7 @@ closeIcon.addEventListener("click", () => {
 
 // show products
 function showListProducts() {
-    fetch(`http://localhost:3000/products`)
+    fetch(`http://160.191.50.248:8080/products`)
         .then(response => response.json())
         .then(data => {
             let tableBody = document.getElementById('product-table-body');
@@ -161,7 +161,7 @@ async function searchProducts() {
             products = await sortTable(typeData, !isAscending, isFilteringByRange, isFilteringByCategory);
         }
         else {
-            const response = await fetch('http://localhost:3000/products');
+            const response = await fetch('http://160.191.50.248:8080/products');
             if (!response.ok) {
                 throw new Error(`HTTP Error, Status: ${response.status}`);
             };
@@ -204,7 +204,7 @@ function deleteTooltip(productID, event) {
 }
 
 function deleteProduct(productId) {
-    fetch(`http://localhost:3000/products/${productId}`, {
+    fetch(`http://160.191.50.248:8080/products/${productId}`, {
         method: 'DELETE',
     })
         .then(response => {
@@ -266,7 +266,7 @@ function toggleEdit(productId, event) {
 
 function updateProduct(productId, updatedProduct) {
     console.log(updatedProduct)
-    fetch(`http://localhost:3000/products/${productId}`, {
+    fetch(`http://160.191.50.248:8080/products/${productId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -301,7 +301,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`http://localhost:3000/products`, {
+    fetch(`http://160.191.50.248:8080/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -350,7 +350,7 @@ async function viewAllOrHide() {
             products = await sortTable(typeData, !isAscending, isFilteringByRange, isFilteringByCategory);
         }
         else {
-            const response = await fetch('http://localhost:3000/products');
+            const response = await fetch('http://160.191.50.248:8080/products');
             if (!response.ok) {
                 throw new Error(`HTTP Error, Status: ${response.status}`);
             };
@@ -413,7 +413,7 @@ async function sortTable(typeData, isAscending, isFilteringByRange, isFilteringB
         } else if(isFilteringByCategory) {
             console.log(isFilteringByCategory);
         } else {
-            const response = await fetch(`http://localhost:3000/products`);
+            const response = await fetch(`http://160.191.50.248:8080/products`);
             if (!response.ok) {
                 throw new Error(`HTTP Error, Status: ${response.status} `);
             };
@@ -499,7 +499,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://localhost:3000/products')
+        return fetch('http://160.191.50.248:8080/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -536,7 +536,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://localhost:3000/products')
+        return fetch('http://160.191.50.248:8080/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -572,7 +572,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://localhost:3000/products')
+        return fetch('http://160.191.50.248:8080/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -630,7 +630,7 @@ rangePrices.forEach(liElement => {
 });
 document.getElementById("see-full-product").addEventListener("click", async () => {
     try {
-        const response = await fetch('http://localhost:3000/products');
+        const response = await fetch('http://160.191.50.248:8080/products');
         if (!response.ok) {
             throw new Error(`HTTP Error, Status: ${response.status}`);
         };
