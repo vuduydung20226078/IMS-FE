@@ -97,7 +97,7 @@ async function checkTypeNote(){
     const typeNote = chevronOptionTypeNote.innerText;
     if(typeNote === "Stock In Note Table"){
         try{
-            const response = await fetch(`http://localhost:3000/api/records/filter?type=import`);
+            const response = await fetch(`http://160.191.50.248:8080/api/records/filter?type=import`);
             if(!response.ok) throw new Error(`Error! Status ${response.satus}`);
             const dataReceived = await response.json();
             displayNotesImport(dataReceived);
@@ -115,7 +115,7 @@ async function checkTypeNote(){
     }
     else{
         try{
-            const response = await fetch(`http://localhost:3000/api/records/filter?type=export`);
+            const response = await fetch(`http://160.191.50.248:8080/api/records/filter?type=export`);
             if(!response.ok) throw new Error(`Error! Status ${response.satus}`);
             const dataReceived = await response.json();
             displayNotesExport(dataReceived);
@@ -143,7 +143,7 @@ startDateInput.addEventListener('change', () => {
         const start = moment(startDate, "DD/MM/YYYY").format("DD/MM/YYYY");
         if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
             console.log("import")
-            fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+            fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
             .then(response => {
                 if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                 return response.json();
@@ -154,7 +154,7 @@ startDateInput.addEventListener('change', () => {
                 document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
             });
         } else {
-            fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDInput.value}}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+            fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDInput.value}}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
             .then(response => {
                 if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                 return response.json();
@@ -182,7 +182,7 @@ endDateInput.addEventListener('change', () => {
                 const start = moment(startDate, "DD/MM/YYYY").format("DD/MM/YYYY");
                 const end = moment(new Date(endDateInput.value), "DD/MM/YYYY").format("DD/MM/YYYY");
                 if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -193,7 +193,7 @@ endDateInput.addEventListener('change', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -223,7 +223,7 @@ minimumQuantityInput.addEventListener('input', () => {
                 return;
             }
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -234,7 +234,7 @@ minimumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -247,7 +247,7 @@ minimumQuantityInput.addEventListener('input', () => {
                 };
         }
               if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -258,7 +258,7 @@ minimumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -286,7 +286,7 @@ maximumQuantityInput.addEventListener('input', () => {
                 return;
             }
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -297,7 +297,7 @@ maximumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -314,7 +314,7 @@ maximumQuantityInput.addEventListener('input', () => {
 // function load data sau khi load page
 async function fetchDataAfterLoadingPage(){
     try {
-        const response = await fetch('http://localhost:3000/api/records/filter?type=import');
+        const response = await fetch('http://160.191.50.248:8080/api/records/filter?type=import');
         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
         const dataReceived = await response.json();
         displayNotesImport(dataReceived);
@@ -370,7 +370,7 @@ IDInput.addEventListener('input', () => {
         const IDPartnerOrSupplier = parseInt(IDInput.value);
         if (!isNaN(IDPartnerOrSupplier)) {
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`http://localhost:3000/api/records/filter?type=import&supplierID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=import&supplierID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -381,7 +381,7 @@ IDInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`http://localhost:3000/api/records/filter?type=export&partnerID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`http://160.191.50.248:8080/api/records/filter?type=export&partnerID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -401,7 +401,7 @@ async function showDetailsNote(id){
     formData.innerHTML = "";
     if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
         try {
-            const response = await fetch(`http://localhost:3000/api/transactions/import/${id}`);
+            const response = await fetch(`http://160.191.50.248:8080/api/transactions/import/${id}`);
             if(!response.ok) throw new Error(`Error! Status ${response.status}`);
             const dataReceived = await response.json();
             dataReceived.productInfo.forEach(product => {
@@ -438,7 +438,7 @@ async function showDetailsNote(id){
         }
     } else {
         try {
-            const response = await fetch(`http://localhost:3000/api/transactions/export/${id}`);
+            const response = await fetch(`http://160.191.50.248:8080/api/transactions/export/${id}`);
             if(!response.ok) throw new Error(`Error! Status ${response.status}`);
             const dataReceived = await response.json();
             dataReceived.productInfo.forEach(product => {
