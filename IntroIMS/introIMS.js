@@ -266,7 +266,7 @@ function toggleEdit(productId, event) {
 
 function updateProduct(productId, updatedProduct) {
     console.log(updatedProduct)
-    fetch(`http://160.191.50.248:8080/products/${productId}`, {
+    fetch(`https://www.smithsfallsnailsspa.com/products/${productId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -301,7 +301,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`http://160.191.50.248:8080/products`, {
+    fetch(`https://www.smithsfallsnailsspa.com/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -350,7 +350,7 @@ async function viewAllOrHide() {
             products = await sortTable(typeData, !isAscending, isFilteringByRange, isFilteringByCategory);
         }
         else {
-            const response = await fetch('http://160.191.50.248:8080/products');
+            const response = await fetch('https://www.smithsfallsnailsspa.com/products');
             if (!response.ok) {
                 throw new Error(`HTTP Error, Status: ${response.status}`);
             };
@@ -413,7 +413,7 @@ async function sortTable(typeData, isAscending, isFilteringByRange, isFilteringB
         } else if(isFilteringByCategory) {
             console.log(isFilteringByCategory);
         } else {
-            const response = await fetch(`http://160.191.50.248:8080/products`);
+            const response = await fetch(`https://www.smithsfallsnailsspa.com/products`);
             if (!response.ok) {
                 throw new Error(`HTTP Error, Status: ${response.status} `);
             };
@@ -499,7 +499,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://160.191.50.248:8080/products')
+        return fetch('https://www.smithsfallsnailsspa.com/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -536,7 +536,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://160.191.50.248:8080/products')
+        return fetch('https://www.smithsfallsnailsspa.com/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -572,7 +572,7 @@ function filterByRange(range, filterByWhat) {
             default:
                 return;
         };
-        return fetch('http://160.191.50.248:8080/products')
+        return fetch('https://www.smithsfallsnailsspa.com/products')
         .then (response => {
             if (!response.ok){
                 throw new Error(`HTTP Error! Status: ${response.status}`);
@@ -630,7 +630,7 @@ rangePrices.forEach(liElement => {
 });
 document.getElementById("see-full-product").addEventListener("click", async () => {
     try {
-        const response = await fetch('http://160.191.50.248:8080/products');
+        const response = await fetch('https://www.smithsfallsnailsspa.com/products');
         if (!response.ok) {
             throw new Error(`HTTP Error, Status: ${response.status}`);
         };
