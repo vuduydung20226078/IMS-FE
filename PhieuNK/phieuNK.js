@@ -178,9 +178,9 @@ closeSupplierIcon.addEventListener("click", () => {
 //function: fetch name supplier from dtb and showListNameSupplier
 async function fetchNameSupplier() {
     try {
-        const response = await fetch("http://160.191.50.248:443/api/suppliers/get-all");
+        const response = await fetch("https://160.191.50.248:443/api/suppliers/get-all");
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`httpss error! Status: ${response.status}`);
         };
         const suppliers = await response.json();
         return suppliers;
@@ -213,9 +213,9 @@ showListNameSupplier();
 //function: fetch name product from dtb and showListNameProduct
 async function fetchNameProduct() {
     try {
-        const response = await fetch("http://160.191.50.248:443/api/products/get-all");
+        const response = await fetch("https://160.191.50.248:443/api/products/get-all");
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`https error! Status: ${response.status}`);
         };
         return await response.json();
     } catch (error) {
@@ -248,9 +248,9 @@ showListNameProduct();
 //function fetch and show data product by supplierName
 async function fetchProductsBySupplierName(supplierID) {
     try {
-        const response = await fetch(`http://160.191.50.248:443/api/suppliers/${supplierID}/products`);
+        const response = await fetch(`https://160.191.50.248:443/api/suppliers/${supplierID}/products`);
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`httpss error! Status: ${response.status}`);
         };
         return response.json();
     } catch (error) {
@@ -301,12 +301,12 @@ async function genInfoToForm() {
     const productID = productNameInput.getAttribute("data-id");
     // Fetch thông tin nhà cung cấp
     try{
-        const dataS = await fetch(`http://160.191.50.248:443/api/suppliers/search/${supplierID}`);
+        const dataS = await fetch(`https://160.191.50.248:443/api/suppliers/search/${supplierID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataS.status}`);
         const suppliers = await dataS.json();
         console.log(suppliers);
         // Fetch thông tin sản phẩm theo productID
-        const dataP = await fetch(`http://160.191.50.248:443/api/products/search/${productID}`);
+        const dataP = await fetch(`https://160.191.50.248:443/api/products/search/${productID}`);
         if(!dataS.ok) throw new Error(`Error! Status: ${dataP.status}`)
         const products = await dataP.json();
         console.log(products);
@@ -449,13 +449,13 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         contactNumber: document.getElementById("number-contact").value,
         address: document.getElementById("address").value
     };
-    fetch('http://160.191.50.248:443/api/suppliers', {
+    fetch('https://160.191.50.248:443/api/suppliers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSupplier)
     })
         .then(response => {
-            if (!response.ok) throw new Error(`HTTP error! Status:${response.status}`);
+            if (!response.ok) throw new Error(`https error! Status:${response.status}`);
             openAddSupplier.classList.remove("active");
             return response.json();
         })
@@ -487,7 +487,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`http://160.191.50.248:443/api/products`, {
+    fetch(`https://160.191.50.248:443/api/products`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -497,7 +497,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         .then(response => {
             console.log(response)
             if (!response.ok) {
-                throw new Error(`HTTP error! Status:${response.status}`);
+                throw new Error(`https error! Status:${response.status}`);
             }
             return response.json();
         })
@@ -548,7 +548,7 @@ checkSave.addEventListener("click", async function (e){
             productIDs: infoPhieuNK.map(info => info.productID)
         };
         console.log(importNote);
-        const resPOST = await fetch('http://160.191.50.248:443/api/imports/create', {
+        const resPOST = await fetch('https://160.191.50.248:443/api/imports/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -556,7 +556,7 @@ checkSave.addEventListener("click", async function (e){
             body: JSON.stringify(importNote)
         });
         if (!resPOST.ok) {
-            throw new Error(`HTTP error! Status: ${resPOST.status}`);
+            throw new Error(`https error! Status: ${resPOST.status}`);
         };
         const dataIm = await resPOST.json();
         console.log(dataIm)
