@@ -551,4 +551,23 @@ table .edit-button:hover{
 .active {
     display: block;
 }
-
+.notification {
+    position: fixed;
+    top: -100px; 
+    left: 55%;
+    transform: translateX(-50%);
+    display: inline-block;
+    white-space: nowrap;
+    width: auto;
+    background-color: #41eea0;
+    color: black;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+}
+.notification.show {
+    top: 0;
+}

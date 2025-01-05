@@ -20,7 +20,7 @@
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </div>
             <ul class="nav_list">
-                <a href="/dashboard/dashboard.html" class="nav_link active">
+                <a href="../dashboard/dashboard.html" class="nav_link active">
                     <ion-icon name="grid" class="nav_icon"></ion-icon>
                     <span class="nav_text">Dashboard</span>
                 </a>
@@ -28,19 +28,19 @@
                     <ion-icon name="file-tray-stacked" class="nav_icon"></ion-icon>
                     <span class="nav_text">Product Management</span>
                 </a>
-                <a href="/supplier/supplierManagement.html" class="nav_link " >
+                <a href="../supplier/supplierManagement.html" class="nav_link " >
                     <ion-icon name="people" class="nav_icon"></ion-icon>
                     <span class="nav_text">Supplier Management</span>
                 </a>
-                <a href="/partner/partnerManagement.html" class="nav_link " >
+                <a href="../partner/partnerManagement.html" class="nav_link " >
                   <ion-icon name="bag-handle-outline"class="nav_icon"></ion-icon>
                   <span class="nav_text">Partners Management</span>
               </a>
-                <a href="/PhieuXK/phieuXK.html" class="nav_link">
+                <a href="../PhieuXK/phieuXK.html" class="nav_link">
                     <ion-icon name="cloud-download" class="nav_icon"></ion-icon>
                     <span class="nav_text">Inventory Out</span>
                 </a>    
-                <a href="/PhieuNK/phieunk.html" class="nav_link">
+                <a href="../PhieuNK/phieunk.html" class="nav_link">
                     <ion-icon name="cloud-upload" class="nav_icon"></ion-icon>
                     <span class="nav_text">Inventory In</span>
                 </a>
@@ -48,7 +48,7 @@
                     <ion-icon name="cart" class="nav_icon"></ion-icon>
                     <span class="nav_text">Order Management</span>
                 </a>
-                <a href="/report/report.html" class="nav_link">
+                <a href="../report/report.html" class="nav_link">
                     <ion-icon name="create" class="nav_icon"></ion-icon>
                     <span class="nav_text">Report & Analytics</span>
                 </a>
@@ -91,46 +91,26 @@
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Products</div>
-            <div class="number">40,876</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
+            <div class="number" id="total-products">Loading...</div>
           </div>
-          <i class='bx bx-cart-alt cart'></i>
         </div>
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Supplier</div>
-            <div class="number">38,876</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
+            <div class="number" id="total-supplier">Loading...</div>
           </div>
-          <i class='bx bxs-cart-add cart two' ></i>
         </div>
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Import</div>
-            <div class="number">12,876</div>
-            <div class="indicator">
-              <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Up from yesterday</span>
-            </div>
+            <div class="number" id="total-import">Loading...</div>
           </div>
-          <i class='bx bx-cart cart three' ></i>
         </div>
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Export</div>
-            <div class="number">11,086</div>
-            <div class="indicator">
-              <i class='bx bx-down-arrow-alt down'></i>
-              <span class="text">Down From Today</span>
-            </div>
+            <div class="number" id="total-export">Loading...</div>
           </div>
-          <i class='bx bxs-cart-download cart four' ></i>
         </div>
       </div>
       <div class="sales-boxes">
@@ -154,63 +134,15 @@
           </div>
         </div>
         <div class="top-sales box">
-          <div class="title">Top </div> 
+          <div class="title">Top Sản Phẩm</div>
           <ul class="top-sales-details">
-            <li>
-            <a href="#">
-              <img src="images/sunglasses.jpg" alt="">
-              <span class="product">Vuitton Sunglasses</span>
-            </a>
-            <span class="price">107</span>
-          </li>
-          <li>
-            <a href="#">
-               <img src="images/jeans.jpg" alt="">
-              <span class="product">Hourglass Jeans </span>
-            </a>
-            <span class="price">67</span>
-          </li>
-          <li>
-            <a href="#">
-             <img src="images/nike.jpg" alt="">
-              <span class="product">Nike Sport Shoe</span>
-            </a>
-            <span class="price">234</span>
-          </li>
-          <li>
-            <a href="#">
-              <img src="images/scarves.jpg" alt="">
-              <span class="product">Hermes Silk Scarves.</span>
-            </a>
-            <span class="price">212</span>
-          </li>
-          <li>
-            <a href="#">
-              <img src="images/blueBag.jpg" alt="">
-              <span class="product">Succi Ladies Bag</span>
-            </a>
-            <span class="price">456</span>
-          </li>
-          <li>
-            <a href="#">
-              <img src="images/bag.jpg" alt="">
-              <span class="product">Gucci Womens's Bags</span>
-            </a>
-            <span class="price">2345</span>
-          <li>
-            <a href="#">
-              <img src="images/addidas.jpg" alt="">
-              <span class="product">Addidas Running Shoe</span>
-            </a>
-            <span class="price">2345</span>
-          </li>
-<li>
-            <a href="#">
-             <img src="images/shirt.jpg" alt="">
-              <span class="product">Bilack Wear's Shirt</span>
-            </a>
-            <span class="price">1245</span>
-          </li>
+            <div class="buttons">
+              <button id="top-export" class="btn">Top Sản Phẩm Xuất</button>
+              <button id="top-import" class="btn">Top Sản Phẩm Nhập</button>
+            </div>
+            <ul class="top-products-details" id="product-list">
+              <!-- Danh sách sản phẩm sẽ được hiển thị ở đây -->
+            </ul>
           </ul>
         </div>
       </div>

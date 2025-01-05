@@ -480,48 +480,76 @@ nav .profile-details i{
     background-color: #0d3073;
   }
   .additional-sections {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
+  display: flex;
+  justify-content: space-between; /* Căn đều hai phần */
+  align-items: center; /* Đảm bảo cả hai phần căn giữa theo chiều dọc */
+  gap: 20px; /* Khoảng cách giữa hai phần */
+  margin-top: 20px;
+}
+
+.additional-sections .top-sales {
+  width: 48%; /* Chia đều không gian giữa hai phần */
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Sắp xếp các phần tử bên trong theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  align-items: center; /* Căn giữa theo chiều ngang */
+  text-align: center; /* Căn giữa nội dung chữ */
+}
+
+.additional-sections .top-sales .title {
+  font-size: 20px; /* Kích thước tiêu đề */
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #0A2558;
+}
+
+.additional-sections .top-sales-details {
+  list-style: none; /* Loại bỏ ký hiệu danh sách */
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column; /* Sắp xếp danh sách theo chiều dọc */
+  gap: 10px; /* Khoảng cách giữa các mục */
+  width: 100%; /* Đảm bảo danh sách rộng bằng container */
+}
+
+.additional-sections .top-sales-details li {
+  display: flex;
+  align-items: center; /* Căn giữa nội dung theo chiều dọc */
+  justify-content: space-between; /* Căn đều tên sản phẩm và giá */
+  padding: 10px;
+  background: #f9f9f9; /* Nền nhạt cho mỗi mục */
+  border-radius: 8px; /* Bo góc cho các mục */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Mỗi mục chiếm toàn bộ chiều ngang */
+}
+
+.additional-sections .top-sales-details li .product {
+  font-size: 16px; /* Kích thước chữ cho tên sản phẩm */
+  font-weight: 400;
+  color: #333;
+  flex: 1; /* Để nội dung sản phẩm chiếm không gian còn lại */
+  margin-right: 10px; /* Khoảng cách giữa sản phẩm và giá */
+}
+
+.additional-sections .top-sales-details li .price {
+  font-size: 16px; /* Kích thước chữ cho giá */
+  font-weight: 500;
+  color: #0A2558;
+}
+
+.additional-sections .top-sales .footer {
+  margin-top: 20px; /* Khoảng cách trên footer */
+  text-align: center; /* Căn giữa footer */
+  font-size: 14px;
+  color: #666;
+}
+
   
-  .additional-sections .top-sales {
-    width: 48%; /* Chia đều không gian */
-    background: #fff;
-    padding: 20px 30px;
-    border-radius: 12px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .additional-sections .top-sales .title {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 10px;
-  }
-  
-  .additional-sections .top-sales-details {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .additional-sections .top-sales-details li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 10px 0;
-  }
-  
-  .additional-sections .top-sales-details li .product {
-    font-size: 17px;
-    font-weight: 400;
-    color: #333;
-  }
-  
-  .additional-sections .top-sales-details li .price {
-    font-size: 17px;
-    font-weight: 500;
-    color: #0A2558;
-  }
   .top-sales-details li {
     display: flex;
     justify-content: space-between;
@@ -1348,41 +1376,40 @@ table .edit-button:hover{
 .hidden {
     display: none;
 }
-.active {
-    display: block;
+
+.top-sales {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
 }
 
-.add-product-btn {
-    background-color: #28a745; /* Green color */
-    color: var(--white-color);
-    margin-left: 5px;
-    border-radius: 5px;
-    cursor: pointer;
+.buttons {
+  display: flex;
+  gap: 10px; /* Khoảng cách giữa các nút */
+  margin-bottom: 15px;
+  margin-top: 20px; /* Căn lề trên thêm khoảng cách */
+  justify-content: flex-end;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 10px;
 }
 
-.add-product-btn:hover {
-    background-color: #218838; /* Darker green on hover */
-}
-#supplier-table-body tr[id^="product-input-row-"] {
-    background-color: #333 !important;
-}
-
-#supplier-table-body tr[id^="product-input-row-"] input {
-    border: 1px solid #666;
-    border-radius: 4px;
-}
-
-#supplier-table-body tr[id^="product-input-row-"] button {
-    transition: background-color 0.3s ease;
+.btn {
+  padding: 10px 20px;
+  background-color: #0A2558;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
-#supplier-table-body tr[id^="product-input-row-"] button:hover {
-    background-color: #218838;
+.btn:hover {
+  background-color: #0d3073;
 }
-#add-product-supplier-btn {
-    position: fixed;
-    bottom: 30px;
-    left: 45%;
-    z-index: 1;
-}
+
 

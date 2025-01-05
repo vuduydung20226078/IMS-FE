@@ -425,6 +425,9 @@ tbody tr:hover{
     cursor: pointer;
     color: var(--first-color);
 }
+#body_product{
+    overflow-y: scroll;
+}
 th {
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -654,6 +657,7 @@ table .edit-button:hover{
     background-color: rgba(0, 0, 0, 0.5); 
     opacity: 0; 
     transition: opacity 0.5s ease; 
+    
 }
 
 .modal-content {
@@ -666,6 +670,8 @@ table .edit-button:hover{
     transform: scale(0); 
     opacity: 0; 
     transition: transform 0.5s ease, opacity 0.5s ease; 
+    overflow-y: scroll;
+
 }
 
 .modal.show {
@@ -676,6 +682,7 @@ table .edit-button:hover{
 .modal-content.show {
     transform: scale(1); 
     opacity: 1; 
+    overflow-y: scroll;
 }
 
 
@@ -782,3 +789,23 @@ table .edit-button:hover{
     color: #e60000; /* Màu đỏ khi hover */
 }
 
+.notification {
+    position: fixed;
+    top: -100px; 
+    left: 55%;
+    transform: translateX(-50%);
+    display: inline-block;
+    white-space: nowrap;
+    width: auto;
+    background-color: #41eea0;
+    color: black;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+}
+.notification.show {
+    top: 0;
+}

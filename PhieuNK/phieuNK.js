@@ -462,13 +462,14 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         .then(dataS => {
             console.log(dataS);
             const inputNameSupplier = document.getElementById("supplier-name-input");
-            inputNameSupplier.value = dataS.name;
-            inputNameSupplier.setAttribute("data-id", dataS.supplierID)
+            inputNameSupplier.value = newSupplier.name;
+            inputNameSupplier.setAttribute("data-id", dataS.supplier.supplierID)
             const listNameProduct = document.getElementById("list-name-product");
             showListNameProduct();
             listNameProduct.classList.add("active");
             const listNameSupplier = document.getElementById("list-name-supplier");
             listNameSupplier.classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
             notification("New supplier added successfully", true);
         })
         .catch(error => {

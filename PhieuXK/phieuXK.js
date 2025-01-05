@@ -404,8 +404,8 @@ document.getElementById("save-partner").addEventListener("click", (e) => {
         .then(dataS => {
             console.log(dataS);
             const inputNamePartner = document.getElementById("partner-name-input");
-            inputNamePartner.value = dataS.name;
-            inputNamePartner.setAttribute("data-id", dataS.partnerID)
+            inputNamePartner.value = newPartner.name;
+            inputNamePartner.setAttribute("data-id", dataS.partner.partnerID)
             const listNameProduct = document.getElementById("list-name-product");
             showListNameProduct();
             listNameProduct.classList.add("active");

@@ -60,7 +60,7 @@ document.getElementById("save-partners").addEventListener("click", (e) => {
         showListpartners();
         openAddpartners.classList.remove("active");
         addpartnersBtn.classList.remove("close");
-        showNotificationOk("partners added successfully!"); // Thông báo thành công
+        notification("Partner added successfully", true);
     })
     .catch(error => {
         console.error("Error:", error);
@@ -73,7 +73,7 @@ document.getElementById("save-partners").addEventListener("click", (e) => {
 // Delete partners
 function deletepartners(partnersId, event) {
     event.preventDefault();
-    fetch(`/partners/${partnersId}`, {
+    fetch(`https://www.smithsfallsnailsspa.com/api/partners/${partnersId}`, {
         method: "DELETE",
     })
         .then(response => response.json())
@@ -85,7 +85,7 @@ function deletepartners(partnersId, event) {
                 rowToDelete.remove();
             }
             showListpartners();
-            showNotificationOk("partners deleted successfully!"); // Thông báo thành công
+            notification("Partner deleted successfully", true);
         })
         .catch(error => {
             console.error("Error deleting partners: ", error);
@@ -147,7 +147,7 @@ function toggleEditpartners(partnersId, event) {
 
 // Update partners
 function updatepartners(partnersId, updatedpartners) {
-    fetch(`http://localhost:3000/partners/${partnersId}`, {
+    fetch(`https://www.smithsfallsnailsspa.com/partners/${partnersId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -158,7 +158,7 @@ function updatepartners(partnersId, updatedpartners) {
         .then(data => {
             console.log(data.message);
             showListpartners();
-            showNotificationOk("partners Update Successfull");
+            notification("Partner updated successfully", true);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -330,9 +330,9 @@ function renderpartners(partners) {
         const row = `
             <tr id="partners-row-${partner.partnerID}">
                 <td>${partner.partnerID}</td>
-                <td>${partner.name}</td>
-                <td>${partner.contactNumber}</td>
-                <td>${partner.address}</td>
+               <td contenteditable="false" id="partners-name-${partner.partnerID}">${partner.name}</td>
+                <td contenteditable="false" id="partners-contactNumber-${partner.partnerID}">${partner.contactNumber}</td>
+                <td contenteditable="false" id="partners-address-${partner.partnerID}">${partner.address}</td>
                 <td>
                     <button id="edit-button-${partner.partnerID}" onclick="toggleEditpartners('${partner.partnerID}', event)" class="edit-btn">Edit</button>
                     <button onclick="deletepartners('${partner.partnerID}', event)" class="delete-btn">Delete</button>
@@ -382,6 +382,27 @@ viewAllButton.addEventListener("click", () => {
 window.addEventListener('DOMContentLoaded', fetchAndRenderpartners);
 
 
-
+function notification(content, isSuccess){
+    const notification = document.getElementById('notification');
+    if(isSuccess){
+        notification.innerHTML = `
+            <ion-icon name="checkmark-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `#41eea0`;
+        notification.style.color = 'black';
+    } else {
+        notification.innerHTML = `
+            <ion-icon name="alert-circle-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `red`;
+        notification.style.color = '#ededed';
+    }
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 0);
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3500); 
+}
 
 

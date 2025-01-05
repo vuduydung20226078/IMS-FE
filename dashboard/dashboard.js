@@ -110,3 +110,99 @@ document.addEventListener("DOMContentLoaded", () => {
     "totalImports"
   );
 });
+
+document.getElementById("top-export").addEventListener("click", () => {
+  fetchTopProducts("export");
+});
+
+document.getElementById("top-import").addEventListener("click", () => {
+  fetchTopProducts("import");
+});
+
+function fetchTopProducts(type) {
+  // Gửi yêu cầu tới server để lấy dữ liệu
+  fetch(`https://www.smithsfallsnailsspa.com/api/overview/top-products?type=${type}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Có lỗi xảy ra khi lấy dữ liệu từ server");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      updateProductList(data);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function updateProductList(products) {
+  const productList = document.getElementById("product-list");
+  productList.innerHTML = ""; // Xóa danh sách cũ
+
+ // Giới hạn hiển thị tối đa 5 sản phẩm
+ const limitedProducts = products.slice(0, 5);
+
+ limitedProducts.forEach((product) => {
+   const listItem = document.createElement("li");
+
+   listItem.innerHTML = `
+     <a href="#">
+       <img src="${product.image}" alt="${product.name}">
+       <span class="product">${product.name}</span>
+     </a>
+     <span class="price">${product.totalQuantity}</span>
+   `;
+
+   productList.appendChild(listItem);
+  });
+}
+
+
+async function fetchData() {
+  try {
+    // URL giả định của API backend
+    const response = await fetch('https://www.smithsfallsnailsspa.com/api/overview/stat'); // Thay bằng URL của bạn
+    
+    // Kiểm tra nếu phản hồi không thành công
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Lấy dữ liệu JSON từ backend
+    const data = await response.json();
+
+    // Cập nhật số liệu vào giao diện
+    updateNumbers(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+// Hàm cập nhật số liệu vào giao diện
+function updateNumbers(data) {
+  const totalProductsElem = document.getElementById('total-products');
+  const totalSuppliersElem = document.getElementById('total-supplier');
+  const totalImportsElem = document.getElementById('total-import');
+  const totalExportsElem = document.getElementById('total-export');
+
+  // Cập nhật dữ liệu, định dạng bằng toLocaleString() để thêm dấu phẩy
+  if (data.totalProducts && totalProductsElem) {
+    totalProductsElem.textContent = data.totalProducts.toLocaleString();
+  }
+
+  if (data.totalSuppliers && totalSuppliersElem) {
+    totalSuppliersElem.textContent = data.totalSuppliers.toLocaleString();
+  }
+
+  if (data.totalImports && totalImportsElem) {
+    totalImportsElem.textContent = data.totalImports.toLocaleString();
+  }
+
+  if (data.totalExports && totalExportsElem) {
+    totalExportsElem.textContent = data.totalExports.toLocaleString();
+  }
+}
+
+// Gọi hàm fetch khi tải trang
+window.addEventListener('load', fetchData);

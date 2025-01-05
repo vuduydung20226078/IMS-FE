@@ -61,7 +61,8 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         showListSuppliers();
         openAddSupplier.classList.remove("active");
         addSupplierBtn.classList.remove("close");
-        showNotificationOk("Supplier added successfully!"); // Thông báo thành công
+        notification("Added successfully", true);
+
     })
     .catch(error => {
         console.error("Error:", error);
@@ -72,21 +73,21 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
 
 
 // Delete Supplier
-function deleteSupplier(supplierId, event) {
+function deleteSupplier(supplierID, event) {
     event.preventDefault();
-    fetch(`http://localhost:3000/supplier/${supplierId}`, {
+    fetch(`https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}`, {
         method: "DELETE",
     })
         .then(response => response.json())
         .then(data => {
             console.log(data.message);
 
-            const rowToDelete = document.getElementById(`supplier-row-${supplierId}`);
+            const rowToDelete = document.getElementById(`supplier-row-${supplierID}`);
             if (rowToDelete) {
                 rowToDelete.remove();
             }
             showListSuppliers();
-            showNotificationOk("Supplier deleted successfully!"); // Thông báo thành công
+            notification("Deleted successfully", true);
         })
         .catch(error => {
             console.error("Error deleting supplier: ", error);
@@ -96,28 +97,36 @@ function deleteSupplier(supplierId, event) {
 
 
 // Edit Supplier
-function toggleEditSupplier(supplierId, event) {
+function toggleEditSupplier(supplierID, event) {
     event.preventDefault();
 
-    const editButton = document.getElementById(`edit-button-${supplierId}`);
-    const rowSupplier = document.getElementById(`supplier-row-${supplierId}`);
-
+    const editButton = document.getElementById(`edit-button-${supplierID}`);
+    const rowSupplier = document.getElementById(`supplier-row-${supplierID}`);
+    const isEditing = editButton.innerText === "Edit";
     // Check if elements exist
     if (!editButton || !rowSupplier) {
         console.error("Edit button or supplier row not found.");
         return;
     }
 
-    const nameCell = document.getElementById(`supplier-name-${supplierId}`);
-    const contactCell = document.getElementById(`supplier-contactNumber-${supplierId}`);
-    const addressCell = document.getElementById(`supplier-address-${supplierId}`);
+    console.log(`Looking for supplier-name-${supplierID}`);
+    const nameCell = document.getElementById(`supplier-name-${supplierID}`);
+    console.log(nameCell);
+    
+    console.log(`Looking for supplier-contactNumber-${supplierID}`);
+    const contactCell = document.getElementById(`supplier-contactNumber-${supplierID}`);
+    console.log(contactCell);
+    
+    console.log(`Looking for supplier-address-${supplierID}`);
+    const addressCell = document.getElementById(`supplier-address-${supplierID}`);
+    console.log(addressCell);
+    
 
     if (!nameCell || !contactCell || !addressCell) {
         console.error("One or more editable cells not found.");
         return;
     }
 
-    const isEditing = editButton.innerText === "Edit";
 
     if (isEditing) {
         // Enable editing
@@ -135,7 +144,7 @@ function toggleEditSupplier(supplierId, event) {
             address: addressCell.innerText
         };
 
-        updateSupplier(supplierId, updatedSupplier);
+        updateSupplier(supplierID, updatedSupplier);
         nameCell.contentEditable = "false";
         contactCell.contentEditable = "false";
         addressCell.contentEditable = "false";
@@ -147,8 +156,8 @@ function toggleEditSupplier(supplierId, event) {
 
 
 // Update Supplier
-function updateSupplier(supplierId, updatedSupplier) {
-    fetch(`http://localhost:3000/supplier/${supplierId}`, {
+function updateSupplier(supplierID, updatedSupplier) {
+    fetch(`https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -159,7 +168,7 @@ function updateSupplier(supplierId, updatedSupplier) {
         .then(data => {
             console.log(data.message);
             showListSuppliers();
-            showNotificationOk("Supplier Update Successfull");
+            notification("Updated successfully", true);
         })
         .catch(error => {
             console.error("Error:", error);
@@ -403,10 +412,10 @@ function renderSuppliers(suppliers) {
     suppliers.forEach(supplier => {
         const row = `
             <tr id="supplier-row-${supplier.supplierID}">
-                <td>${supplier.supplierID}</td>
-                <td>${supplier.name}</td>
-                <td>${supplier.contactNumber}</td>
-                <td>${supplier.address}</td>
+               <td>${supplier.supplierID}</td>
+                <td contenteditable="false" id="supplier-name-${supplier.supplierID}">${supplier.name}</td>
+                <td contenteditable="false" id="supplier-contactNumber-${supplier.supplierID}">${supplier.contactNumber}</td>
+                <td contenteditable="false" id="supplier-address-${supplier.supplierID}">${supplier.address}</td>
                 <td>
                     <button id="edit-button-${supplier.supplierID}" onclick="toggleEditSupplier('${supplier.supplierID}', event)" class="edit-btn">Edit</button>
                     <button onclick="deleteSupplier('${supplier.supplierID}', event)" class="delete-btn">Delete</button>
@@ -565,23 +574,7 @@ document.getElementById("save-product-supplier").addEventListener("click", (e) =
         }
         return response.json();
     })
-    .then(data => {
-        // Success notification
-        showNotificationOk("Product successfully added to supplier!");
-        
-        // Close the form
-        productSupplierForm.classList.remove("active");
-        addProductSupplierBtn.classList.remove("close");
-        
-        // Clear input fields
-        document.getElementById("product-supplier-id").value = '';
-        document.getElementById("product-id").value = '';
-    })
-    .catch(error => {
-        // Error notification
-        console.error("Error adding product to supplier:", error);
-        showNotificationError(error.message || "Failed to add product to supplier.");
-    });
+
 });
 
 
@@ -611,7 +604,7 @@ async function deleteProduct(supplierID, productID) {
         }
 
         const data = await response.json();
-        alert(`Product deleted successfully: ${data.message || ''}`);
+        notification("Product deleted successfully", true);
 
         // Cập nhật lại danh sách sản phẩm sau khi xóa
         viewSupplierProducts(supplierID);
@@ -622,3 +615,25 @@ async function deleteProduct(supplierID, productID) {
 }
 
 
+function notification(content, isSuccess){
+    const notification = document.getElementById('notification');
+    if(isSuccess){
+        notification.innerHTML = `
+            <ion-icon name="checkmark-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `#41eea0`;
+        notification.style.color = 'black';
+    } else {
+        notification.innerHTML = `
+            <ion-icon name="alert-circle-outline"></ion-icon> ${content}
+        `;
+        notification.style.backgroundColor = `red`;
+        notification.style.color = '#ededed';
+    }
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 0);
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3500); 
+}

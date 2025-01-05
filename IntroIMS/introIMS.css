@@ -692,7 +692,7 @@ table .edit-button:hover {
 
 .filter-sub-menu {
     position: absolute;
-    left: 202px;
+    left: 198px;
     top: 0.5px;
     background-color: #082033;
     display: none;
@@ -706,6 +706,7 @@ table .edit-button:hover {
     text-align: center;
 
 }
+
 
 #filter-menu li:hover .filter-sub-menu {
     display: block;
