@@ -1,0 +1,226 @@
+:root {
+  --first-color: #12192C;
+  --second-color: #F5A623;
+  --white-color: #ededed;
+
+  --body-font: 'Poppins', sans-serif;
+  --small-font-size: 0.875rem;
+
+  @media screen and (min-width: 768px) {
+      --small-font-size: 0.638rem;
+  }
+}
+
+:root {
+  --z-back: -10;
+  --z-normal: 1;
+  --z-tooltrip: 10;
+  --z-fixed: 100;
+  --z-modal: 1000;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  margin: 0.5rem;
+  padding: 1rem 0 0 16rem;
+  padding-left: 228px;
+  font-family: var(--body-font);
+  min-height: 100vh;
+  background: #060120;
+  transition: 0.5s;
+}
+
+h1 {
+  margin: 0;
+}
+h2 {
+  color: white; /* Đổi màu chữ của phần tử <h2> thành trắng */
+}
+p {
+  color: white; /* Đổi màu chữ của tất cả các phần tử <p> thành trắng */
+}
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.l-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; /* Đổi chiều rộng trở lại 250px */
+  height: 100vh;
+  background: var(--first-color);
+  padding: 1.25rem 0.5rem 2rem;
+  transition: 0.5s;
+  z-index: var(--z-fixed);
+}
+label {
+  color: white; /* Thay đổi màu chữ của các label thành màu trắng */
+}
+
+.nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav_logo {
+  position: relative;
+  top: 20px;
+  right: -10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.nav_logo-icon {
+  margin-right: 0.75rem;
+  width: 30px;
+  height: 30px;
+  color: #b2cb40;
+}
+
+.nav_logo-text {
+  font-size: 1.4rem;
+  color: #b2cb40;
+  font-weight: 700;
+}
+
+.nav_toggle {
+  position: absolute;
+  top: 2rem;
+  right: -0.5rem;
+  width: 18px;
+  height: 18px;
+  background: var(--second-color);
+  border-radius: 50%;
+  font-size: 200%;
+  color: var(--first-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.nav_link {
+  position: relative;
+  top: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  color: var(--white-color);
+  transition: 0.5s;
+}
+.nav-item {
+  display: unset; /* Loại bỏ display nếu không muốn thay đổi giá trị */
+}
+.nav_link:hover {
+  background: var(--second-color);
+  color: var(--first-color);
+}
+
+.nav_icon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.nav_text {
+  font-weight: 550;
+}
+
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background-color: var(--sidebar-color); /* Màu nền của sidebar */
+  position: fixed;
+  left: 250px;
+  top: 0;
+  height: 100vh;
+  transition: transform 0.3s ease-in-out;
+  z-index: var(--z-normal);
+  border-left: 1px solid #12192C;
+}
+
+.sidebar.hidden {
+  transform: translateX(-250px);
+}
+
+.sidebar h3 {
+  margin: 0;
+  padding: 20px;
+  color: white;
+  background-color: #12192C;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.sidebar .nav-link {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #12192C;
+  transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #e9ecef;
+}
+
+/* Chevron Button */
+.chevron-container {
+position: fixed;
+top: 10px;
+left: 500px;
+transition: left 0.3s ease-in-out;
+z-index: var(--z-normal);
+}
+
+.chevron-container.hidden {
+left: 250px;
+}
+
+.chevron-button {
+background-color: #e9ecef;
+border: none;
+cursor: pointer;
+font-size: 20px;
+padding: 10px;
+border-radius: 5px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+/* Main Content */
+.content {
+  margin-left: 300px; /* Giảm giá trị này để đẩy nội dung sang trái */
+  padding: 20px;
+  flex-grow: 1;
+  transition: margin-left 0.3s ease-in-out;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.content.sidebar-hidden {
+margin-left: 270px;
+transform: translateX(-250px);
+}
