@@ -59,86 +59,87 @@ document.addEventListener("DOMContentLoaded", function () {
   togglePeriodInput();
   });
   
-  
+ 
   function fetchStatistics() {
-  // Lấy giá trị từ các trường trong giao diện
-  const typeInput = document.getElementById("type");
-  const periodInput = document.getElementById("timePeriod");
-  const monthInput = document.getElementById("month");
-  const yearInput = document.getElementById("year");
+    const typeInput = document.getElementById("type");
+    const periodInput = document.getElementById("timePeriod");
+    const monthInput = document.getElementById("month");
+    const yearInput = document.getElementById("year");
+    const period = periodInput.value; // "day", "month", "year"
+
+    const type = typeInput.value; // Loại (import/export)
+    const year = yearInput.value; // Năm
+    const month = monthInput ? monthInput.value : null; // Tháng
   
-  const type = typeInput.value; // Loại (import/export)
-  const period = periodInput.value; // "day", "month", "year"
-  const year = yearInput.value; // Năm
-  const month = monthInput ? monthInput.value : null; // Tháng
+    // Kiểm tra dữ liệu đầu vào
+    if (!type || !period || !year) {
+        alert("Vui lòng nhập đầy đủ thông tin trước khi xem báo cáo.");
+        return;
+    }
   
-  // Kiểm tra dữ liệu đầu vào
-  if (!type || !period || !year) {
-    alert("Vui lòng nhập đầy đủ thông tin trước khi xem báo cáo.");
-    return;
-  }
+    if ((period === "day" || period === "month") && !month) {
+        alert("Vui lòng nhập tháng cho khoảng thời gian đã chọn.");
+        return;
+    }
   
-  if ((period === "day" || period === "month") && !month) {
-    alert("Vui lòng nhập tháng cho khoảng thời gian đã chọn.");
-    return;
-  }
+    // Xây dựng URL với các tham số truy vấn
+    let url = new URL("https://www.smithsfallsnailsspa.com/api/report/statistics-by-period?type=${type}&period=${period}&year=${year}");
+    let params = { type: type, period: period, year: year };
   
-  // Xây dựng URL với các tham số truy vấn
-  let url = new URL("http://160.191.50.248:8080/api/report/statistics-by-period?type=${type}&period=${period}&year=${year}");
-  let params = { type: type, period: period, year: year };
+    if (period === "day" || period === "month") {
+        params.month = month;
+    }
+    console.log(period);
+
+    url.search = new URLSearchParams(params).toString();
   
-  if (period === "day" || period === "month") {
-    params.month = month;
-  }
-  
-  url.search = new URLSearchParams(params).toString();
-  
-  fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data && data.data) {
-        const statistics = data.data;
-  
-        // Hiển thị canvas để vẽ biểu đồ
-        const chart = document.getElementById("chart");
-        chart.style.display = "block";
-  
-        // Gọi hàm vẽ biểu đồ tương ứng
-        if (period === "day") {
-          renderDayChart(data.data, type); // Vẽ biểu đồ cho ngày
-        } else {
-          renderMonthYearChart(data.data, period, type); // Vẽ biểu đồ cho tháng hoặc năm
-        }
-      } else {
-        alert("Không có dữ liệu thống kê.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching statistics:", error);
-      alert("Không thể tải dữ liệu. Vui lòng kiểm tra lại.");
-    });
-  }
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data && data.data) {
+                const statistics = data.data;
+    
+                // Hiển thị canvas để vẽ biểu đồ
+                const chart = document.getElementById("chart");
+                chart.style.display = "block";
+    
+                // Gọi hàm vẽ biểu đồ tương ứng
+                if (period === "day") {
+                    renderDayChart(data.data, period, type); // Pass period to renderDayChart
+                } else {
+                    renderMonthYearChart(data.data, period, type); // Vẽ biểu đồ cho tháng hoặc năm
+                }
+            } else {
+                alert("Không có dữ liệu thống kê.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching statistics:", error);
+            alert("Không thể tải dữ liệu. Vui lòng kiểm tra lại.");
+        });
+}
+
   
   
   
   // Hàm vẽ biểu đồ cho ngày
-  function renderDayChart(statistics) {
+  function renderDayChart(statistics, period) {
     const labels = [];
     const data = [];
   
     // Duyệt qua dữ liệu thống kê để lấy thông tin
     statistics.forEach((item) => {
-      const label =
-        period === "month"
-          ? `Ngày ${item.day}` // Nếu là tháng, hiển thị ngày
-          : `Tháng ${item.month}`; // Nếu là năm, hiển thị tháng
-      labels.push(label);
-      data.push(item.total); // Dữ liệu số lượng
+        const label =
+            period === "day"
+                ? `Ngày ${item.day}` // Nếu là tháng, hiển thị ngày
+                : `Tháng ${item.month}`; // Nếu là năm, hiển thị tháng
+        labels.push(label);
+        data.push(item.total); // Dữ liệu số lượng
     });
   
     // Cài đặt và vẽ biểu đồ
@@ -396,7 +397,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     // Xây dựng URL với các tham số truy vấn
-    let url = new URL("http://160.191.50.248:8080/api/report/statistics-by-product");
+    let url = new URL("https://www.smithsfallsnailsspa.com/api/report/statistics-by-product");
     let params = {
       type: selectedProductType,
       productId: selectedProductId,
@@ -528,7 +529,7 @@ document.addEventListener("DOMContentLoaded", function () {
     productDropdown.innerHTML = `<option value="" disabled selected>Đang tải danh sách sản phẩm...</option>`;
   
     // Fetch danh sách sản phẩm từ API
-    fetch('http://160.191.50.248:8080/api/products/get-all')
+    fetch('https://www.smithsfallsnailsspa.com/api/products/get-all')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Lỗi khi tải danh sách sản phẩm');

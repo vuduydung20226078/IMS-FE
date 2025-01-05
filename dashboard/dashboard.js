@@ -2,7 +2,7 @@
 
 // Hàm gọi API và cập nhật danh sách tồn kho
 function fetchInventory(type, limit = 5) {
-    const url = `http://160.191.50.248:8080/api/overview/top-inventory?type=${type}&limit=${limit}`;
+    const url = `https://www.smithsfallsnailsspa.com/api/overview/top-inventory?type=${type}&limit=${limit}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -96,7 +96,7 @@ function displaySuppliers(data, containerId, title, key) {
 document.addEventListener("DOMContentLoaded", () => {
   // Gọi API cho top nhà cung cấp theo số lượng sản phẩm
   fetchTopSuppliers(
-    "http://160.191.50.248:8080/api/overview/top-suppliers-by-products",
+    "https://www.smithsfallsnailsspa.com/api/overview/top-suppliers-by-products",
     "top-suppliers-products",
     "Top nhà cung cấp theo số lượng sản phẩm",
     "totalProducts"
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Gọi API cho top nhà cung cấp theo số lượng phiếu nhập
   fetchTopSuppliers(
-    "http://160.191.50.248:8080/api/overview/top-suppliers-by-imports",
+    "https://www.smithsfallsnailsspa.com/api/overview/top-suppliers-by-imports",
     "top-suppliers-imports",
     "Top nhà cung cấp theo số lượng phiếu nhập",
     "totalImports"

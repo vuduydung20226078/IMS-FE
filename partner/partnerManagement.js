@@ -31,7 +31,7 @@ closeIcon.addEventListener("click", () => {
 
 // Display partners
 function showListpartners() {
-    fetch('http://160.191.50.248:8080/api/partners/get-all')
+    fetch('https://www.smithsfallsnailsspa.com/api/partners/get-all')
         .then(response => response.json())
         .then(data => {
             displaypartners(data.slice(0, 8)); 
@@ -50,7 +50,7 @@ document.getElementById("save-partners").addEventListener("click", (e) => {
         contactNumber: document.getElementById("partners-contactNumber").value,
         address: document.getElementById("partners-address").value
     };
-    fetch('http://160.191.50.248:8080/api/partners', {
+    fetch('https://www.smithsfallsnailsspa.com/api/partners', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newpartners)
@@ -182,16 +182,16 @@ function displaypartners(partners) {
         return;
     }
 
-    partners.forEach(partners => {
+    partners.forEach(partner => {
         const row = `
-            <tr id="partners-row-${partners.partnerID}">
-                <td>${partners.partnerID}</td>
-                <td contenteditable="false" id="partners-name-${partners.partnerID}">${partners.name}</td>
-                <td contenteditable="false" id="partners-contactNumber-${partners.partnerID}">${partners.contactNumber}</td>
-                <td contenteditable="false" id="partners-address-${partners.partnerID}">${partners.address}</td>
+            <tr id="partners-row-${partner.partnerID}">
+                <td>${partner.partnerID}</td>
+                <td contenteditable="false" id="partners-name-${partner.partnerID}">${partner.name}</td>
+                <td contenteditable="false" id="partners-contactNumber-${partner.partnerID}">${partner.contactNumber}</td>
+                <td contenteditable="false" id="partners-address-${partner.partnerID}">${partner.address}</td>
                 <td>
-                    <button id="edit-button-${partners.partnerID}" onclick="toggleEditpartners('${partners.partnerID}', event)" class="edit-btn">Edit</button>
-                    <button onclick="deletepartners('${partners.partnerID}', event)" class="delete-btn">Delete</button>
+                    <button id="edit-button-${partner.partnerID}" onclick="toggleEditpartners('${partner.partnerID}', event)" class="edit-btn">Edit</button>
+                    <button onclick="deletepartners('${partner.partnerID}', event)" class="delete-btn">Delete</button>
                 </td>
             </tr>`;
         tableBodypartners.innerHTML += row;
@@ -230,7 +230,7 @@ const showNotificationOk = (message) => {
 async function searchpartners() {
     try {
         const searchTerm = document.getElementById("search-text").value.toLowerCase();
-        const response = await fetch('http://160.191.50.248:8080/api/partners/get-all'); 
+        const response = await fetch('https://www.smithsfallsnailsspa.com/api/partners/get-all'); 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -265,7 +265,7 @@ document.getElementById("search-text").addEventListener("input", searchpartners)
 // Add event listener to toggle partners view
 document.getElementById("view-all-btn").addEventListener("click", (event) => {
     event.preventDefault();
-    viewAllOrHidepartners()();
+    viewAllOrHidepartners();
 });
 
 
@@ -284,16 +284,17 @@ function displaypartners(partners) {
         return;
     }
 
-    partners.forEach(partners => {
+    partners.forEach(partner => {
+        console.log(partners)
         const row = `
-            <tr id="partners-row-${partners.partnerID}">
-                <td>${partners.partnerID}</td>
-                <td contenteditable="false" id="partners-name-${partners.partnerID}">${partners.name}</td>
-                <td contenteditable="false" id="partners-contactNumber-${partners.partnerID}">${partners.contactNumber}</td>
-                <td contenteditable="false" id="partners-address-${partners.partnerID}">${partners.address}</td>
+            <tr id="partners-row-${partner.partnerID}">
+                <td>${partner.partnerID}</td>
+                <td contenteditable="false" id="partners-name-${partner.partnerID}">${partner.name}</td>
+                <td contenteditable="false" id="partners-contactNumber-${partner.partnerID}">${partner.contactNumber}</td>
+                <td contenteditable="false" id="partners-address-${partner.partnerID}">${partner.address}</td>
                 <td>
-                    <button id="edit-button-${partners.partnerID}" onclick="toggleEditpartners('${partners.partnerID}', event)" class="edit-btn">Edit</button>
-                    <button onclick="deletepartners('${partners.partnerID}', event)" class="delete-btn">Delete</button>
+                    <button id="edit-button-${partner.partnerID}" onclick="toggleEditpartners('${partner.partnerID}', event)" class="edit-btn">Edit</button>
+                    <button onclick="deletepartners('${partner.partnerID}', event)" class="delete-btn">Delete</button>
                 </td>
             </tr>`;
         tableBodypartners.innerHTML += row;
@@ -306,7 +307,7 @@ let sortedpartners = [];
 let originalpartners = []; 
 
 function fetchAndRenderpartners() {
-    const url = 'http://160.191.50.248:8080/api/partners/get-all';
+    const url = 'https://www.smithsfallsnailsspa.com/api/partners/get-all';
 
     fetch(url)
         .then(response => response.json())
@@ -325,16 +326,16 @@ function renderpartners(partners) {
     const partnersTableBody = document.getElementById("partners-table-body");
     partnersTableBody.innerHTML = ""; 
 
-    partners.forEach(partners => {
+    partners.forEach(partner => {
         const row = `
-            <tr id="partners-row-${partners.partnersID}">
-                <td>${partners.partnersID}</td>
-                <td>${partners.name}</td>
-                <td>${partners.contactNumber}</td>
-                <td>${partners.address}</td>
+            <tr id="partners-row-${partner.partnerID}">
+                <td>${partner.partnerID}</td>
+                <td>${partner.name}</td>
+                <td>${partner.contactNumber}</td>
+                <td>${partner.address}</td>
                 <td>
-                    <button id="edit-button-${partners.partnersID}" onclick="toggleEditpartners('${partners.partnersID}', event)" class="edit-btn">Edit</button>
-                    <button onclick="deletepartners('${partners.partnersID}', event)" class="delete-btn">Delete</button>
+                    <button id="edit-button-${partner.partnerID}" onclick="toggleEditpartners('${partner.partnerID}', event)" class="edit-btn">Edit</button>
+                    <button onclick="deletepartners('${partner.partnerID}', event)" class="delete-btn">Delete</button>
                 </td>
             </tr>
         `;

@@ -405,9 +405,22 @@ table thead{
 }
 tbody tr:nth-child(even){
     background-color: #378f8f;
-    color: var(--first-color);
+    color: black;
+}
+
+#body_product tr:nth-child(even){
+    background-color: #378f8f;
+    color: black;
+}
+#body_product tr:nth-child(odd){
+    color: black;
 }
 tbody tr:hover{
+    background-color: var(--second-color);
+    cursor: pointer;
+    color: var(--first-color);
+}
+#body_product tr:hover{
     background-color: var(--second-color);
     cursor: pointer;
     color: var(--first-color);

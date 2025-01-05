@@ -32,7 +32,7 @@ closeIcon.addEventListener("click", () => {
 
 // Display Suppliers
 function showListSuppliers() {
-    fetch('http://160.191.50.248:8080/api/suppliers/get-all')
+    fetch('https://www.smithsfallsnailsspa.com/api/suppliers/get-all')
         .then(response => response.json())
         .then(data => {
             displaySuppliers(data.slice(0, 8)); 
@@ -51,7 +51,7 @@ document.getElementById("save-supplier").addEventListener("click", (e) => {
         contactNumber: document.getElementById("supplier-contactNumber").value,
         address: document.getElementById("supplier-address").value
     };
-    fetch('http://160.191.50.248:8080/api/suppliers', {
+    fetch('https://www.smithsfallsnailsspa.com/api/suppliers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newSupplier)
@@ -232,7 +232,7 @@ const showNotificationOk = (message) => {
 async function searchSuppliers() {
     try {
         const searchTerm = document.getElementById("search-text").value.toLowerCase();
-        const response = await fetch('http://160.191.50.248:8080/api/suppliers/get-all'); 
+        const response = await fetch('https://www.smithsfallsnailsspa.com/api/suppliers/get-all'); 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -319,7 +319,7 @@ function viewSupplierProducts(supplierID) {
 
     modalSupplierId.textContent = supplierID;
 
-    fetch(`http://160.191.50.248:8080/api/suppliers/${supplierID}/products`)
+    fetch(`https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}/products`)
         .then((response) => response.json())
         .then((products) => {
             modalProductTableBody.innerHTML = ""; // Xóa nội dung cũ
@@ -331,7 +331,6 @@ function viewSupplierProducts(supplierID) {
                             <td>${product.productID}</td>
                             <td>${product.productName}</td>
                             <td>${product.price}</td>
-                            <td>${product.quantity}</td>
                             <td>
                                 <button 
                                     class="delete-product-btn" 
@@ -382,7 +381,7 @@ let sortedSuppliers = [];
 let originalSuppliers = []; 
 
 function fetchAndRenderSuppliers() {
-    const url = 'http://160.191.50.248:8080/api/suppliers/get-all';
+    const url = 'https://www.smithsfallsnailsspa.com/api/suppliers/get-all';
 
     fetch(url)
         .then(response => response.json())
@@ -471,7 +470,7 @@ document.getElementById('add-product-btn').addEventListener('click', function ()
     }
 
     // Gửi dữ liệu lên server (hoặc xử lý tại chỗ nếu không có server)
-    fetch(`http://160.191.50.248:8080/api/suppliers/${supplierID}/products/${productID}`, {
+    fetch(`https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}/products/${productID}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -546,7 +545,7 @@ document.getElementById("save-product-supplier").addEventListener("click", (e) =
     };
 
     // Fetch request to add product to supplier
-    fetch('http://160.191.50.248:8080/api/suppliers/add-product', {
+    fetch('https://www.smithsfallsnailsspa.com/api/suppliers/add-product', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json' 
@@ -595,10 +594,10 @@ async function deleteProduct(supplierID, productID) {
 
     try {
         console.log(`Deleting Product ID: ${productID} from Supplier ID: ${supplierID}`);
-        console.log(`Request URL: http://160.191.50.248:8080/api/suppliers/${supplierID}/products/${productID}`);
+        console.log(`Request URL: https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}/products/${productID}`);
 
         // Gửi yêu cầu DELETE tới API
-        const response = await fetch(`http://160.191.50.248:8080/api/suppliers/${supplierID}/products/${productID}`, {
+        const response = await fetch(`https://www.smithsfallsnailsspa.com/api/suppliers/${supplierID}/products/${productID}`, {
             method: 'DELETE',
         });
 
