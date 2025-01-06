@@ -139,16 +139,16 @@ function fetchTopProducts(type) {
 function updateProductList(products) {
   const productList = document.getElementById("product-list");
   productList.innerHTML = ""; // Xóa danh sách cũ
-
+  const defaultImagePath = "top_product.jpg"; // Đường dẫn tới file ảnh mặc định
  // Giới hạn hiển thị tối đa 5 sản phẩm
  const limitedProducts = products.slice(0, 5);
 
  limitedProducts.forEach((product) => {
    const listItem = document.createElement("li");
-
+   const productImage = product.image || defaultImagePath;
    listItem.innerHTML = `
      <a href="#">
-       <img src="${product.image}" alt="${product.name}">
+       <img src="${productImage}" alt="${product.name}">
        <span class="product">${product.name}</span>
      </a>
      <span class="price">${product.totalQuantity}</span>

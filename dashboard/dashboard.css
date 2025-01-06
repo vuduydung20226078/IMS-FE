@@ -483,8 +483,9 @@ nav .profile-details i{
   display: flex;
   justify-content: space-between; /* Căn đều hai phần */
   align-items: center; /* Đảm bảo cả hai phần căn giữa theo chiều dọc */
-  gap: 20px; /* Khoảng cách giữa hai phần */
   margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .additional-sections .top-sales {
@@ -1413,3 +1414,23 @@ table .edit-button:hover{
 }
 
 
+#product-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+#product-list img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+
+
+#product-list .price {
+  margin-left: auto;
+  color: black;
+}
