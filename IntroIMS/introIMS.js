@@ -72,6 +72,29 @@ closeIcon.addEventListener("click", () => {
     addProductBtn.classList.remove("close");
     document.querySelector('.overlay').classList.remove("active");
 });
+// filter category
+async function categoryUnique(){
+    try {
+        const response = await fetch(`https://www.smithsfallsnailsspa.com/api/products/get-all`);
+        if(!response.ok) throw new Error(`Error, Status: ${response.status}`);
+        const dataReceived = await response.json();
+        const category = dataReceived.map(data => data.category);
+        const categoryUnique = [...new Set(category)];
+        const optionCategory = document.getElementById("filter-by-category");
+        optionCategory.innerHTML = "";
+        categoryUnique.forEach(category => {
+            const elementLi = `
+                <li style="width: 200px; height: auto" onclick="filterByCategory(this)">${category}</li>
+            `;
+            optionCategory.innerHTML += elementLi;
+        })
+    } catch(error){
+        console.error(error);
+    };
+};
+document.addEventListener('DOMContentLoaded', function() {
+    categoryUnique();
+})
 
 // show products
 function showListProducts() {
@@ -87,19 +110,20 @@ function showListProducts() {
             let productsToShow = data.slice(0, 8);
             productsToShow.forEach(product => {
                 let rowProduct = `
-                <tr class="row" id="product-row-${product.productID}" onclick="showHistory(${product.productID})">
+                <tr class="row" id="product-row-${product.productID}">
                     <td class="content">${product.productID}</td>
-                    <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
-                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
-                    <td class="content" contenteditable="false" id="product-unit-${product.productID}">${product.unitCal}</td>
-                    <td class="content" contenteditable="false" id="product-category-${product.productID}">${product.category}</td>
-                    <td class="content" contenteditable="false" id="product-price-${product.productID}">${product.price}</td>
-                    <td class="content" id="product-lastupdate-${product.productID}">${product.lastUpdate || "N/A"}</td>
+                    <td class="content" contenteditable="false" id="product-name-${product.productID}" onclick="showHistory(${product.productID})">${product.productName}</td>
+                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}" onclick="showHistory(${product.productID})">${product.quantity}</td>
+                    <td class="content" contenteditable="false" id="product-unit-${product.productID}" onclick="showHistory(${product.productID})">${product.unitCal}</td>
+                    <td class="content" contenteditable="false" id="product-category-${product.productID}" onclick="showHistory(${product.productID})">${product.category}</td>
+                    <td class="content" contenteditable="false" id="product-price-${product.productID}" onclick="showHistory(${product.productID})">${product.price}</td>
+                    <td class="content" id="product-lastupdate-${product.productID}" onclick="showHistory(${product.productID})">${product.lastUpdate || "N/A"}</td>
                     <td id="delete-edit">
                         <button type="button" class="delete-button" id="delete-button" onclick="deleteTooltip('${product.productID}',event)">
                             <span class="tooltip" id="tooltip-${product.productID}" onclick="deleteProduct('${product.productID}')">If you delete this product here, it will also be deleted in the product list provided by the supplier. Click this notification to delete!</span>
                         Delete</button>
                         <button type="button" class="edit-button" id="edit-button-${product.productID}" onclick="toggleEdit('${product.productID}', event)">Edit</button>
+                    </td>    
                 </tr>
             `;
                 tableBody.innerHTML += rowProduct;
@@ -121,20 +145,20 @@ function displayProducts(productsToShow) {
     tableBodyProduct.innerHTML = "";
     productsToShow.forEach(product => {
         let rowProduct = `
-                <tr class="row" id="product-row-${product.productID}" onclick="showHistory(${product.productID})">
+                <tr class="row" id="product-row-${product.productID}">
                     <td class="content">${product.productID}</td>
-                    <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
-                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
-                    <td class="content" contenteditable="false" id="product-unit-${product.productID}">${product.unitCal}</td>
-                    <td class="content" contenteditable="false" id="product-category-${product.productID}">${product.category}</td>
-                    <td class="content" contenteditable="false" id="product-price-${product.productID}">${product.price}</td>
-                    <td class="content" id="product-lastupdate-${product.productID}">${product.lastUpdate || "N/A"}</td>
+                    <td class="content" contenteditable="false" id="product-name-${product.productID}" onclick="showHistory(${product.productID})">${product.productName}</td>
+                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}" onclick="showHistory(${product.productID})">${product.quantity}</td>
+                    <td class="content" contenteditable="false" id="product-unit-${product.productID}" onclick="showHistory(${product.productID})">${product.unitCal}</td>
+                    <td class="content" contenteditable="false" id="product-category-${product.productID}" onclick="showHistory(${product.productID})">${product.category}</td>
+                    <td class="content" contenteditable="false" id="product-price-${product.productID}" onclick="showHistory(${product.productID})">${product.price}</td>
+                    <td class="content" id="product-lastupdate-${product.productID}" onclick="showHistory(${product.productID})">${product.lastUpdate || "N/A"}</td>
                     <td id="delete-edit">
                         <button type="button" class="delete-button" id="delete-button" onclick="deleteTooltip('${product.productID}',event)">
                             <span class="tooltip" id="tooltip-${product.productID}" onclick="deleteProduct('${product.productID}')">If you delete this product here, it will also be deleted in the product list provided by the supplier. Click this notification to delete!</span>
                         Delete</button>
                         <button type="button" class="edit-button" id="edit-button-${product.productID}" onclick="toggleEdit('${product.productID}', event)">Edit</button>
-                    </td>
+                    </td>    
                 </tr>
             `;
         tableBodyProduct.innerHTML += rowProduct;
@@ -147,6 +171,9 @@ async function showHistory(productID){
         const dataReceived = await response.json();
         const tableBodyHistory = document.getElementById("table-body-cart");
         tableBodyHistory.innerHTML = "";
+        if(dataReceived.length === 0){
+           tableBodyHistory.innerHTML =  `<tr><td colspan='6'>This product doesn't have any history in import or export.</td></tr>`;
+        }
         dataReceived.forEach(data => {
             let typeNote = "";
             if(data.type === "import"){
@@ -194,7 +221,7 @@ async function searchProducts() {
             products = await sortTable(typeData, !isAscending, isFilteringByRange, isFilteringByCategory);
         } 
         else if (isFilteringByRange === false && isSorting === false && isFilteringByCategory === true){
-            products = {};
+            products = JSON.parse(sessionStorage.getItem("dataFiltered"));
         } 
         else if (isFilteringByRange === false && isSorting === true && isFilteringByCategory === true){
             products = await sortTable(typeData, !isAscending, isFilteringByRange, isFilteringByCategory);
@@ -450,11 +477,10 @@ let isFilterBy = "";
 async function sortTable(typeData, isAscending, isFilteringByRange, isFilteringByCategory) {
     let productsToSort;
     try {
-        console.log(isFilteringByRange);
         if (isFilteringByRange) {
             productsToSort = await filterByRange(liElementWhich, isFilterBy);
         } else if(isFilteringByCategory) {
-            console.log(isFilteringByCategory);
+            productsToSort = JSON.parse(sessionStorage.getItem("dataFiltered"));
         } else {
             const response = await fetch(`https://www.smithsfallsnailsspa.com/api/products/get-all`);
             if (!response.ok) {
@@ -462,7 +488,7 @@ async function sortTable(typeData, isAscending, isFilteringByRange, isFilteringB
             };
             productsToSort = await response.json();
         }
-        productsSorted = productsToSort.sort((pA, pB) => {
+        const productsSorted = productsToSort.sort((pA, pB) => {
             if (typeData === "StringName"){
                 return isAscending ? pA.productName.localeCompare(pB.productName) :  pB.productName.localeCompare(pA.productName);
             }
@@ -473,15 +499,18 @@ async function sortTable(typeData, isAscending, isFilteringByRange, isFilteringB
                 return isAscending? pA.price - pB.price : pB.price - pA.price;
             }
             if (typeData === "Date"){
-                const dateA = moment(pA.lastUpdate, "DD/MM/YY HH:mm:ss");
-                const dateB = moment(pB.lastUpdate, "DD/MM/YY HH:mm:ss");
+                const dateA = moment(pA.lastUpdate);
+                const dateB = moment(pB.lastUpdate);
                 if (isAscending) {
+                    console.log(isAscending)
                     return dateA.isBefore(dateB) ? -1 : (dateA.isSame(dateB) ? 0 : 1);
                 } else {
+                    console.log(isAscending)
                     return dateB.isBefore(dateA) ? -1 : (dateB.isSame(dateA) ? 0 : 1);
                 }         
             }
         });
+        console.log(productsSorted)
         if (!showAll) displayProducts(productsSorted.slice(0, 8));
         else displayProducts(productsSorted);
         return productsSorted;
@@ -509,6 +538,7 @@ document.querySelector("table thead tr").addEventListener("click", (e) => {
         sortTable(typeData, isAscending, isFilteringByRange, isFilteringByCategory);
     }
     if (index === 6) {
+        console.log("date")
         typeData = "Date"
         sortTable(typeData, isAscending, isFilteringByRange, isFilteringByCategory);
     }
@@ -637,10 +667,31 @@ function filterByRange(range, filterByWhat) {
 
     }
 }
+const rangeCategories = document.querySelectorAll("#filter-by-category li");
 const rangeQuantities = document.querySelectorAll("#filter-by-quantity li");
 const rangePrices = document.querySelectorAll("#filter-by-price li");
 const rangeDays = document.querySelectorAll("#filter-by-lastupdate li");
 let liElementWhich;
+
+async function filterByCategory(elementCategory){
+    const category = elementCategory.textContent;
+    isFilterBy = "Category";
+    isFilteringByCategory = true;
+    isSorting = false;
+    isFilteringByRange = false;
+    try {
+        const response = await fetch('https://www.smithsfallsnailsspa.com/api/products/get-all');
+        if(!response.ok) throw new Error(`Error, Status ${response.status}`);
+        const dataReceived = await response.json();
+        const dataFiltered = dataReceived.filter(dataReceived => dataReceived.category === category);
+        sessionStorage.setItem("dataFiltered", JSON.stringify(dataFiltered));
+        if (!showAll) displayProducts(dataFiltered.slice(0, 8));
+        else displayProducts(dataFiltered);
+        document.getElementById("filter-menu").classList.remove("active");
+    }catch(error){
+        console.error(error);
+    };
+}
 rangeDays.forEach(liElement => {
     liElement.addEventListener("click", function() {
         liElementWhich = this.textContent;
