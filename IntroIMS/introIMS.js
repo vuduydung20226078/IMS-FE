@@ -111,13 +111,13 @@ function showListProducts() {
             productsToShow.forEach(product => {
                 let rowProduct = `
                 <tr class="row" id="product-row-${product.productID}">
-                    <td class="content">${product.productID}</td>
-                    <td class="content" contenteditable="false" id="product-name-${product.productID}" onclick="showHistory(${product.productID})">${product.productName}</td>
-                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}" onclick="showHistory(${product.productID})">${product.quantity}</td>
-                    <td class="content" contenteditable="false" id="product-unit-${product.productID}" onclick="showHistory(${product.productID})">${product.unitCal}</td>
-                    <td class="content" contenteditable="false" id="product-category-${product.productID}" onclick="showHistory(${product.productID})">${product.category}</td>
-                    <td class="content" contenteditable="false" id="product-price-${product.productID}" onclick="showHistory(${product.productID})">${product.price}</td>
-                    <td class="content" id="product-lastupdate-${product.productID}" onclick="showHistory(${product.productID})">${product.lastUpdate || "N/A"}</td>
+                    <td class="content" onclick="showHistory(${product.productID})">${product.productID}</td>
+                    <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
+                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
+                    <td class="content" contenteditable="false" id="product-unit-${product.productID}">${product.unitCal}</td>
+                    <td class="content" contenteditable="false" id="product-category-${product.productID}">${product.category}</td>
+                    <td class="content" contenteditable="false" id="product-price-${product.productID}">${product.price}</td>
+                    <td class="content" id="product-lastupdate-${product.productID}">${product.lastUpdate || "N/A"}</td>
                     <td id="delete-edit">
                         <button type="button" class="delete-button" id="delete-button" onclick="deleteTooltip('${product.productID}',event)">
                             <span class="tooltip" id="tooltip-${product.productID}" onclick="deleteProduct('${product.productID}')">If you delete this product here, it will also be deleted in the product list provided by the supplier. Click this notification to delete!</span>
@@ -146,13 +146,13 @@ function displayProducts(productsToShow) {
     productsToShow.forEach(product => {
         let rowProduct = `
                 <tr class="row" id="product-row-${product.productID}">
-                    <td class="content">${product.productID}</td>
-                    <td class="content" contenteditable="false" id="product-name-${product.productID}" onclick="showHistory(${product.productID})">${product.productName}</td>
-                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}" onclick="showHistory(${product.productID})">${product.quantity}</td>
-                    <td class="content" contenteditable="false" id="product-unit-${product.productID}" onclick="showHistory(${product.productID})">${product.unitCal}</td>
-                    <td class="content" contenteditable="false" id="product-category-${product.productID}" onclick="showHistory(${product.productID})">${product.category}</td>
-                    <td class="content" contenteditable="false" id="product-price-${product.productID}" onclick="showHistory(${product.productID})">${product.price}</td>
-                    <td class="content" id="product-lastupdate-${product.productID}" onclick="showHistory(${product.productID})">${product.lastUpdate || "N/A"}</td>
+                    <td class="content" onclick="showHistory(${product.productID})">${product.productID}</td>
+                    <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
+                    <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
+                    <td class="content" contenteditable="false" id="product-unit-${product.productID}">${product.unitCal}</td>
+                    <td class="content" contenteditable="false" id="product-category-${product.productID}">${product.category}</td>
+                    <td class="content" contenteditable="false" id="product-price-${product.productID}">${product.price}</td>
+                    <td class="content" id="product-lastupdate-${product.productID}">${product.lastUpdate || "N/A"}</td>
                     <td id="delete-edit">
                         <button type="button" class="delete-button" id="delete-button" onclick="deleteTooltip('${product.productID}',event)">
                             <span class="tooltip" id="tooltip-${product.productID}" onclick="deleteProduct('${product.productID}')">If you delete this product here, it will also be deleted in the product list provided by the supplier. Click this notification to delete!</span>
