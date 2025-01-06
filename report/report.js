@@ -48,145 +48,147 @@
  
   let currentChart = null;
 
-  function fetchStatistics() {
-      const typeInput = document.getElementById("type");
-      const periodInput = document.getElementById("timePeriod");
-      const monthInput = document.getElementById("month");
-      const period = periodInput.value; // "day", "month"
-  
-      const type = typeInput.value; // Loại (import/export)
-      const month = monthInput ? monthInput.value : null; // Tháng
-  
-      // Kiểm tra dữ liệu đầu vào
-      if (!type || !period) {
-          alert("Vui lòng nhập đầy đủ thông tin trước khi xem báo cáo.");
-          return;
-      }
-  
-      if (period === "day" && !month) {
-          alert("Vui lòng nhập tháng cho khoảng thời gian đã chọn.");
-          return;
-      }
-  
-      // Xây dựng URL với các tham số truy vấn
-      let url = new URL("https://www.smithsfallsnailsspa.com/api/report/statistics-by-period");
-      let params = { type: type, period: period };
-  
-      if (period === "day") {
-          params.month = month;
-      }
-  
-      url.search = new URLSearchParams(params).toString();
-  
-      fetch(url)
-          .then((response) => {
-              if (!response.ok) {
-                  throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-              return response.json();
-          })
-          .then((data) => {
-              if (data && data.data) {
-                  const statistics = data.data;
-  
-                  // Hiển thị canvas để vẽ biểu đồ
-                  const chart = document.getElementById("chart");
-                  chart.style.display = "block";
-  
-                  // Xóa biểu đồ cũ nếu tồn tại
-                  if (currentChart) {
-                      currentChart.destroy(); // Hủy biểu đồ cũ
-                  }
-  
-                  // Gọi hàm vẽ biểu đồ tương ứng và lưu vào `currentChart`
-                  if (period === "day") {
-                      currentChart = renderDayChart(statistics); // Vẽ biểu đồ theo ngày
-                  } else {
-                      currentChart = renderMonthChart(statistics); // Vẽ biểu đồ theo tháng
-                  }
-              } else {
-                  alert("Không có dữ liệu thống kê.");
-              }
-          })
-          .catch((error) => {
-              console.error("Error fetching statistics:", error);
-              alert("Không thể tải dữ liệu. Vui lòng kiểm tra lại.");
-          });
-  }
-  
-  // Hàm vẽ biểu đồ theo ngày
-  function renderDayChart(statistics) {
-      const labels = [];
-      const data = [];
-  
-      statistics.forEach((item) => {
-          const label = `Ngày ${item.day}`;
-          labels.push(label);
-          data.push(item.total);
-      });
-  
-      const ctx = document.getElementById("chart").getContext("2d");
-      return new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels: labels,
-              datasets: [
-                  {
-                      label: "Số lượng sản phẩm (Theo ngày)",
-                      data: data,
-                      borderColor: "rgba(75, 192, 192, 1)",
-                      backgroundColor: "rgba(75, 192, 192, 0.2)",
-                      borderWidth: 1,
-                  },
-              ],
-          },
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: true,
-                  },
-              },
-          },
-      });
-  }
-  
-  // Hàm vẽ biểu đồ theo tháng
-  function renderMonthChart(statistics) {
-      const labels = [];
-      const data = [];
-  
-      statistics.forEach((item) => {
-          const label = `Tháng ${item.month}`;
-          labels.push(label);
-          data.push(item.total);
-      });
-  
-      const ctx = document.getElementById("chart").getContext("2d");
-      return new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels: labels,
-              datasets: [
-                  {
-                      label: "Số lượng sản phẩm (Theo tháng)",
-                      data: data,
-                      borderColor: "rgba(75, 192, 192, 1)",
-                      backgroundColor: "rgba(75, 192, 192, 0.2)",
-                      borderWidth: 1,
-                  },
-              ],
-          },
-          options: {
-              responsive: true,
-              scales: {
-                  y: {
-                      beginAtZero: true,
-                  },
-              },
-          },
-      });
-  }
+function fetchStatistics() {
+    const typeInput = document.getElementById("type");
+    const periodInput = document.getElementById("timePeriod");
+    const monthInput = document.getElementById("month");
+    const yearInput = document.getElementById("year");  // Input năm
+    const period = periodInput.value; // "day", "month"
+
+    const type = typeInput.value; // Loại (import/export)
+    const month = monthInput ? monthInput.value : null; // Tháng
+    const year = yearInput ? yearInput.value : null; // Năm
+
+    // Kiểm tra dữ liệu đầu vào
+    if (!type || !period || !year) {
+        alert("Vui lòng nhập đầy đủ thông tin trước khi xem báo cáo.");
+        return;
+    }
+
+    if (period === "day" && !month) {
+        alert("Vui lòng nhập tháng cho khoảng thời gian đã chọn.");
+        return;
+    }
+
+    // Xây dựng URL với các tham số truy vấn
+    let url = new URL("https://www.smithsfallsnailsspa.com/api/report/statistics-by-period");
+    let params = { type: type, period: period, year: year };
+
+    if (period === "day") {
+        params.month = month;
+    }
+
+    url.search = new URLSearchParams(params).toString();
+
+    fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            if (data && data.data) {
+                const statistics = data.data;
+
+                // Hiển thị canvas để vẽ biểu đồ
+                const chart = document.getElementById("chart");
+                chart.style.display = "block";
+
+                // Xóa biểu đồ cũ nếu tồn tại
+                if (currentChart) {
+                    currentChart.destroy(); // Hủy biểu đồ cũ
+                }
+
+                // Gọi hàm vẽ biểu đồ tương ứng và lưu vào `currentChart`
+                if (period === "day") {
+                    currentChart = renderDayChart(statistics); // Vẽ biểu đồ theo ngày
+                } else {
+                    currentChart = renderMonthChart(statistics); // Vẽ biểu đồ theo tháng
+                }
+            } else {
+                alert("Không có dữ liệu thống kê.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error fetching statistics:", error);
+            alert("Không thể tải dữ liệu. Vui lòng kiểm tra lại.");
+        });
+}
+
+// Hàm vẽ biểu đồ theo ngày
+function renderDayChart(statistics) {
+    const labels = [];
+    const data = [];
+
+    statistics.forEach((item) => {
+        const label = `Ngày ${item.day}`;
+        labels.push(label);
+        data.push(item.total);
+    });
+
+    const ctx = document.getElementById("chart").getContext("2d");
+    return new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Số lượng sản phẩm (Theo ngày)",
+                    data: data,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+}
+
+// Hàm vẽ biểu đồ theo tháng
+function renderMonthChart(statistics) {
+    const labels = [];
+    const data = [];
+
+    statistics.forEach((item) => {
+        const label = `Tháng ${item.month}`;
+        labels.push(label);
+        data.push(item.total);
+    });
+
+    const ctx = document.getElementById("chart").getContext("2d");
+    return new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "Số lượng sản phẩm (Theo tháng)",
+                    data: data,
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    backgroundColor: "rgba(75, 192, 192, 0.2)",
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+}
   
   
   document.addEventListener("DOMContentLoaded", () => {
@@ -221,7 +223,8 @@
           <label for="month">Tháng:</label>
           <input type="number" id="month" class="form-control mb-3" min="1" max="12" placeholder="Nhập tháng">
         </div>
-       
+       <label for="year">Chọn năm:</label>
+        <input type="number" id="year" name="year" required>
       <button class="btn btn-primary" onclick="fetchStatistics()">Xem báo cáo</button>
         <canvas id="chart" class="mt-5" style="display:none;"></canvas>
       `;
@@ -252,6 +255,8 @@
             <label for="month">Tháng:</label>
             <input type="number" id="month" class="form-control" min="1" max="12" placeholder="Nhập tháng">
           </div>
+           <label for="year">Chọn năm:</label>
+        <input type="number" id="year" name="year" required>
           <button class="btn btn-primary" onclick="fetchProductStatistics()">Xem báo cáo</button>
           <canvas id="productChart" class="mt-5" style="display:none;"></canvas>
         `;
@@ -334,14 +339,16 @@
     
   
   
-  // Hàm fetch dữ liệu thống kê sản phẩm
-  function fetchProductStatistics() {
+// Biến toàn cục lưu trữ biểu đồ hiện tại
+
+function fetchProductStatistics() {
     const productType = document.getElementById("productType");
     const productId = document.getElementById("productId");
     const timePeriod = document.getElementById("timePeriod");
     const monthInput = document.getElementById("month");
+    const yearInput = document.getElementById("year");  // Input năm
 
-    if (!productType || !productId || !timePeriod) {
+    if (!productType || !productId || !timePeriod || !yearInput) {
         console.error("Một hoặc nhiều phần tử HTML bị thiếu.");
         return;
     }
@@ -350,8 +357,9 @@
     const selectedProductId = productId.value;
     const selectedTimePeriod = timePeriod.value;
     const selectedMonth = monthInput ? monthInput.value : null;
+    const selectedYear = yearInput ? yearInput.value : null;  // Lấy giá trị năm
 
-    if (!selectedProductType || !selectedProductId || !selectedTimePeriod) {
+    if (!selectedProductType || !selectedProductId || !selectedTimePeriod || !selectedYear) {
         alert("Vui lòng nhập đầy đủ thông tin trước khi xem báo cáo.");
         return;
     }
@@ -366,6 +374,7 @@
         type: selectedProductType,
         productId: selectedProductId,
         period: selectedTimePeriod,
+        year: selectedYear, // Thêm tham số năm vào URL
     };
 
     if (selectedTimePeriod === "day" && selectedMonth) {
@@ -477,7 +486,7 @@ function drawMonthChart(statistics) {
         },
     });
 }
-  
+
   // Tải danh sách sản phẩm 
   function populateProductDropdown() {
     const productDropdown = document.getElementById("productId");

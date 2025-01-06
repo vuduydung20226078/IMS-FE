@@ -483,6 +483,7 @@ nav .profile-details i{
   display: flex;
   justify-content: space-between; /* Căn đều hai phần */
   align-items: center; /* Đảm bảo cả hai phần căn giữa theo chiều dọc */
+  gap: 20px; /* Khoảng cách giữa hai phần */
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
