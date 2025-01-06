@@ -143,7 +143,7 @@ startDateInput.addEventListener('change', () => {
         const start = moment(startDate, "DD/MM/YYYY").startOf('days').format("YYYY-MM-DDTHH:mm:ss");
         if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
             console.log("import")
-            fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+            fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDInput.value}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
             .then(response => {
                 if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                 return response.json();
@@ -154,7 +154,7 @@ startDateInput.addEventListener('change', () => {
                 document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
             });
         } else {
-            fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDInput.value}}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+            fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDInput.value}}&startDate=${start}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
             .then(response => {
                 if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                 return response.json();
@@ -182,7 +182,7 @@ endDateInput.addEventListener('change', () => {
                 const start = moment(startDate, "DD/MM/YYYY HH:mm:ss").startOf('days').format("YYYY-MM-DDTHH:mm:ss");
                 const end = moment(new Date(endDateInput.value), "DD/MM/YYYY HH:mm:ss").endOf('days').format("YYYY-MM-DDTHH:mm:ss");
                 if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -193,7 +193,7 @@ endDateInput.addEventListener('change', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -223,7 +223,7 @@ minimumQuantityInput.addEventListener('input', () => {
                 return;
             }
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -234,7 +234,7 @@ minimumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -247,7 +247,7 @@ minimumQuantityInput.addEventListener('input', () => {
                 };
         }
               if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -258,7 +258,7 @@ minimumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -286,7 +286,7 @@ maximumQuantityInput.addEventListener('input', () => {
                 return;
             }
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -297,7 +297,7 @@ maximumQuantityInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDInput.value}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -373,7 +373,7 @@ IDInput.addEventListener('input', () => {
         const IDPartnerOrSupplier = parseInt(IDInput.value);
         if (!isNaN(IDPartnerOrSupplier)) {
             if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&supplierId=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();
@@ -384,7 +384,31 @@ IDInput.addEventListener('input', () => {
                         document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
                     });
                 } else {
-                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerID=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&partnerId=${IDPartnerOrSupplier}&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    .then(response => {
+                        if(!response.ok) throw new Error(`Error! Status ${response.status}`);
+                        return response.json();
+                    })
+                    .then(dataReceived => displayNotesExport(dataReceived))
+                    .catch(error => {
+                        console.error(error)
+                        document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
+                    });
+                };
+        } else {
+            if(chevronOptionTypeNote.innerText === "Stock In Note Table"){
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=import&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
+                    .then(response => {
+                        if(!response.ok) throw new Error(`Error! Status ${response.status}`);
+                        return response.json();
+                    })
+                    .then(dataReceived => displayNotesImport(dataReceived))
+                    .catch(error => {
+                        console.error(error)
+                        document.getElementById("body-list-note").innerHTML = `<tr><td colspan='8'>No notes found.</td></tr>`;
+                    });
+                } else {
+                    fetch(`https://www.smithsfallsnailsspa.com/api/transactions/filter?type=export&startDate=${start}&endDate=${end}&minProductQuantity=${minimumQuantityInput.value}&maxProductQuantity=${maximumQuantityInput.value}`)
                     .then(response => {
                         if(!response.ok) throw new Error(`Error! Status ${response.status}`);
                         return response.json();

@@ -87,7 +87,7 @@ function showListProducts() {
             let productsToShow = data.slice(0, 8);
             productsToShow.forEach(product => {
                 let rowProduct = `
-                <tr class="row" id="product-row-${product.productID}">
+                <tr class="row" id="product-row-${product.productID}" onclick="showHistory(${product.productID})">
                     <td class="content">${product.productID}</td>
                     <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
                     <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
@@ -121,7 +121,7 @@ function displayProducts(productsToShow) {
     tableBodyProduct.innerHTML = "";
     productsToShow.forEach(product => {
         let rowProduct = `
-                <tr class="row" id="product-row-${product.productID}">
+                <tr class="row" id="product-row-${product.productID}" onclick="showHistory(${product.productID})">
                     <td class="content">${product.productID}</td>
                     <td class="content" contenteditable="false" id="product-name-${product.productID}">${product.productName}</td>
                     <td class="content" contenteditable="false" id="product-quantity-${product.productID}">${product.quantity}</td>
@@ -140,7 +140,49 @@ function displayProducts(productsToShow) {
         tableBodyProduct.innerHTML += rowProduct;
     });
 }
-
+async function showHistory(productID){
+    try {
+        const response = await fetch(`https://www.smithsfallsnailsspa.com/api/products/${productID}/history`);
+        if(!response.ok) throw new Error(`Error! Status: ${response.status}`);
+        const dataReceived = await response.json();
+        const tableBodyHistory = document.getElementById("table-body-cart");
+        tableBodyHistory.innerHTML = "";
+        dataReceived.forEach(data => {
+            let typeNote = "";
+            if(data.type === "import"){
+                typeNote = "Import";
+            } else if(data.type === "export") {
+                typeNote = "Export";
+            };
+            const row = `
+                    <tr>
+                        <td>${typeNote}</td>
+                        <td>${data.transaction_id}</td>
+                        <td>${data.product_id}</td>
+                        <td>${data.product_name}</td>
+                        <td>${data.quantity}</td>
+                    </tr>
+            `;
+            tableBodyHistory.innerHTML += row
+        });
+        document.getElementById("title-cart").classList.add("active");
+        document.getElementById("in-cart").classList.add("active");
+        document.getElementById("overlay").classList.add("active");
+    } catch(error){
+        console.error(error);
+        document.getElementById("title-cart").classList.add("active");
+        document.getElementById("in-cart").classList.add("active");
+        document.getElementById("overlay").classList.add("active");
+        const rowError = `<tr><td colspan='6'>This product doesn't have any history in import or export.</td></tr>`;
+        document.getElementById("table-body-cart").innerHTML = rowError;
+    }
+}
+document.getElementById("close-cart").addEventListener("click", (e) => {
+    e.preventDefault();
+    document.getElementById("title-cart").classList.remove("active");
+    document.getElementById("in-cart").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+})
 // function search products
 async function searchProducts() {
     try {
