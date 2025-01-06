@@ -134,7 +134,7 @@ function renderDayChart(statistics) {
             labels: labels,
             datasets: [
                 {
-                    label: "Số lượng sản phẩm (Theo ngày)",
+                    label: "Số lượng phiếu (Theo ngày)",
                     data: data,
                     borderColor: "rgba(75, 192, 192, 1)",
                     backgroundColor: "rgba(75, 192, 192, 0.2)",
@@ -171,7 +171,7 @@ function renderMonthChart(statistics) {
             labels: labels,
             datasets: [
                 {
-                    label: "Số lượng sản phẩm (Theo tháng)",
+                    label: "Số lượng phiếu (Theo tháng)",
                     data: data,
                     borderColor: "rgba(75, 192, 192, 1)",
                     backgroundColor: "rgba(75, 192, 192, 0.2)",
