@@ -180,7 +180,10 @@ label {
   color: white;
   transition: background-color 0.3s;
 }
-
+.active{
+  background-color: #F5A623;
+  color: #060120;
+}
 .sidebar .nav-link:hover {
   background-color: #e9ecef;
 }
