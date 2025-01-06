@@ -509,6 +509,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
             openAddProduct.classList.remove("active");
             const listNameProduct = document.getElementById("list-name-product");
             listNameProduct.classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
             notification("New product added successfully", true);
         })
         .catch(error => {
