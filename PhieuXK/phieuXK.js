@@ -411,6 +411,7 @@ document.getElementById("save-partner").addEventListener("click", (e) => {
             listNameProduct.classList.add("active");
             const listNamePartner = document.getElementById("list-name-partner");
             listNamePartner.classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
             notification("New partner added successfully!", true);
         })
         .catch(error => {
