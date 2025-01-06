@@ -488,7 +488,7 @@ document.getElementById("save-product").addEventListener("click", (e) => {
         price: parseFloat(document.getElementById("product-price").value),
     };
     console.log("Sending data:", JSON.stringify(newProduct));
-    fetch(`https://www.smithsfallsnailsspa.com/api/products`, {
+    fetch(`https://www.smithsfallsnailsspa.com/api/products/insert`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
